@@ -3,7 +3,7 @@
 // ============================================
 
 // Solana Mint Address - Update this value to change across all pages
-const MINT_ADDRESS = "9AvytnUKsLxPxFHFqS6VLxaxt5p6BhYNr53SD2Chpump";
+const MINT_ADDRESS = "CSrwNk6B1DwWCHRMsaoDVUfD5bBMQCJPY72ZG3Nnpump";
 
 // Pump.fun URL with mint address
 const HOW_TO_BUY_URL = `https://pump.fun/coin/${MINT_ADDRESS}`;
