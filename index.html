@@ -203,6 +203,15 @@
         box-shadow: 0 8px 25px rgba(231, 76, 60, 0.4);
       }
 
+      /* Hamburger Menu - Hidden on Desktop */
+      .hamburger {
+        display: none;
+      }
+
+      .menu-overlay {
+        display: none;
+      }
+
       /* Hero Section */
       .hero {
         min-height: 100vh;
@@ -586,6 +595,35 @@
         .story-card.medium {
           grid-column: span 12;
         }
+
+        header {
+          padding: 15px 40px;
+        }
+
+        .logo img {
+          height: 100px;
+        }
+
+        .logo span {
+          font-size: 18px;
+        }
+
+        header.scrolled .logo img {
+          height: 40px;
+        }
+
+        header.scrolled .logo span {
+          font-size: 12px;
+        }
+
+        .nav-links {
+          gap: 5px;
+        }
+
+        .nav-links a {
+          font-size: 11px;
+          padding: 8px 12px;
+        }
       }
 
       @media (max-width: 768px) {
@@ -593,8 +631,114 @@
           padding: 15px 20px;
         }
 
+        .logo img {
+          height: 70px;
+        }
+
+        .logo span {
+          font-size: 14px;
+        }
+
+        header.scrolled .logo img {
+          height: 35px;
+        }
+
+        header.scrolled .logo span {
+          font-size: 11px;
+        }
+
         .nav-links {
           display: none;
+          position: fixed;
+          top: 0;
+          right: 0;
+          width: 280px;
+          height: 100vh;
+          background: var(--ocean-deep);
+          flex-direction: column;
+          justify-content: flex-start;
+          align-items: stretch;
+          padding: 80px 30px 30px;
+          gap: 0;
+          box-shadow: -5px 0 30px rgba(0, 0, 0, 0.3);
+          z-index: 1001;
+        }
+
+        .nav-links.active {
+          display: flex;
+        }
+
+        .nav-links a {
+          color: white !important;
+          padding: 15px 20px;
+          border-radius: 10px;
+          font-size: 14px;
+          border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-links a:last-child {
+          border-bottom: none;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+          background: rgba(255, 255, 255, 0.1) !important;
+        }
+
+        /* Hamburger Menu Button */
+        .hamburger {
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          width: 30px;
+          height: 24px;
+          cursor: pointer;
+          z-index: 1002;
+        }
+
+        .hamburger span {
+          display: block;
+          width: 100%;
+          height: 3px;
+          background: var(--text-light);
+          border-radius: 3px;
+          transition: all 0.3s ease;
+        }
+
+        header.scrolled .hamburger span {
+          background: var(--ocean-deep);
+        }
+
+        .hamburger.active span {
+          background: white;
+        }
+
+        .hamburger.active span:nth-child(1) {
+          transform: rotate(45deg) translate(8px, 6px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+          opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+          transform: rotate(-45deg) translate(8px, -6px);
+        }
+
+        /* Mobile Menu Overlay */
+        .menu-overlay {
+          display: none;
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: rgba(0, 0, 0, 0.5);
+          z-index: 1000;
+        }
+
+        .menu-overlay.active {
+          display: block;
         }
 
         .hero-content,
@@ -607,6 +751,40 @@
 
         .gallery-grid {
           grid-template-columns: 1fr;
+        }
+
+        .hero-content {
+          padding-top: 180px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .logo img {
+          height: 55px;
+        }
+
+        .logo span {
+          font-size: 12px;
+        }
+
+        header.scrolled .logo img {
+          height: 30px;
+        }
+
+        header.scrolled .logo span {
+          font-size: 10px;
+        }
+
+        .hero-text h1 {
+          font-size: 36px;
+        }
+
+        .hero-quote {
+          font-size: 20px;
+        }
+
+        .hero-content {
+          padding-top: 150px;
         }
       }
 
@@ -659,7 +837,7 @@
           />
           <span>Maria's Mobility Fund</span>
         </a>
-        <div class="nav-links">
+        <div class="nav-links" id="navLinks">
           <a href="index.html" class="active">My Story</a>
           <a href="#mission">My Mission</a>
           <a href="interviews.html">Interviews</a>
@@ -672,8 +850,14 @@
           >
           <a href="#" data-link="how-to-buy">How to Buy</a>
         </div>
+        <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
       </nav>
     </header>
+    <div class="menu-overlay" id="menuOverlay" onclick="toggleMenu()"></div>
 
     <!-- Hero Section -->
     <section class="hero" id="story">
@@ -868,6 +1052,38 @@
         } else {
           header.classList.remove("scrolled");
         }
+      });
+
+      // Mobile Menu Toggle
+      function toggleMenu() {
+        const hamburger = document.getElementById("hamburger");
+        const navLinks = document.getElementById("navLinks");
+        const menuOverlay = document.getElementById("menuOverlay");
+
+        hamburger.classList.toggle("active");
+        navLinks.classList.toggle("active");
+        menuOverlay.classList.toggle("active");
+
+        // Prevent body scroll when menu is open
+        if (navLinks.classList.contains("active")) {
+          document.body.style.overflow = "hidden";
+        } else {
+          document.body.style.overflow = "auto";
+        }
+      }
+
+      // Close menu when clicking a link
+      document.querySelectorAll(".nav-links a").forEach((link) => {
+        link.addEventListener("click", () => {
+          const hamburger = document.getElementById("hamburger");
+          const navLinks = document.getElementById("navLinks");
+          const menuOverlay = document.getElementById("menuOverlay");
+
+          hamburger.classList.remove("active");
+          navLinks.classList.remove("active");
+          menuOverlay.classList.remove("active");
+          document.body.style.overflow = "auto";
+        });
       });
 
       // Initial body overflow hidden
