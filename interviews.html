@@ -463,7 +463,6 @@
         }
 
         .nav-links {
-          display: none;
           position: fixed;
           top: 0;
           right: 0;
@@ -477,10 +476,15 @@
           gap: 0;
           box-shadow: -5px 0 30px rgba(0, 0, 0, 0.3);
           z-index: 9999;
+          display: flex;
+          transform: translateX(100%);
+          transition: transform 0.3s ease;
+          visibility: hidden;
         }
 
         .nav-links.active {
-          display: flex;
+          transform: translateX(0);
+          visibility: visible;
         }
 
         .nav-links a {
@@ -489,6 +493,10 @@
           border-radius: 10px;
           font-size: 14px;
           border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+          display: block;
+          text-decoration: none;
+          -webkit-tap-highlight-color: rgba(255, 255, 255, 0.2);
+          touch-action: manipulation;
         }
 
         .nav-links a:last-child {
@@ -509,6 +517,9 @@
           height: 24px;
           cursor: pointer;
           z-index: 10000;
+          position: relative;
+          -webkit-tap-highlight-color: transparent;
+          touch-action: manipulation;
         }
 
         .hamburger span {
@@ -518,6 +529,7 @@
           background: var(--text-light);
           border-radius: 3px;
           transition: all 0.3s ease;
+          pointer-events: none;
         }
 
         header.scrolled .hamburger span {
@@ -542,7 +554,6 @@
 
         /* Mobile Menu Overlay */
         .menu-overlay {
-          display: none;
           position: fixed;
           top: 0;
           left: 0;
@@ -550,10 +561,14 @@
           height: 100%;
           background: rgba(0, 0, 0, 0.5);
           z-index: 9998;
+          opacity: 0;
+          visibility: hidden;
+          transition: opacity 0.3s ease, visibility 0.3s ease;
         }
 
         .menu-overlay.active {
-          display: block;
+          opacity: 1;
+          visibility: visible;
         }
 
         .hero-content,
