@@ -13,6 +13,12 @@
   var PUMP_ICON =
     '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>';
 
+  var SHIELD_ICON =
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.6 4.6 5.8v5.6c0 4.4 3.1 8.5 7.4 9.9 4.3-1.4 7.4-5.5 7.4-9.9V5.8L12 2.6Z"/><path d="m9.2 11.9 2 2 3.6-3.7"/></svg>';
+
+  var HEART_ICON =
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1 1.1L12 21.2l7.8-7.7 1-1.1a5.5 5.5 0 0 0 0-7.8Z"/></svg>';
+
   var VERIFIED_ICON =
     '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 1.6 14.6 4l3.4-.3.9 3.3 3 1.7-1.3 3.2 1.3 3.2-3 1.7-.9 3.3-3.4-.3L12 22.4 9.4 20l-3.4.3-.9-3.3-3-1.7L3.4 12 2.1 8.8l3-1.7.9-3.3L9.4 4 12 1.6Zm-1.2 13.9 5.6-5.6-1.4-1.4-4.2 4.2-2-2L7.4 12l3.4 3.5Z"/></svg>';
 
@@ -56,13 +62,22 @@
       '<span class="hero-glow hero-glow--b"></span>' +
       '<div class="wrap">' +
       '<div class="hero-inner">' +
-      '<span class="eyebrow">A project by Maria Del Sol</span>' +
+      '<span class="eyebrow">Official charity campaign on pump.fun</span>' +
       '<h1>Mobility is a right,<em class="gradient-text">not a privilege.</em></h1>' +
+      '<p class="hero-lede">The <strong>Mobility Project</strong> is a charity campaign on ' +
+      '<strong>pump.fun</strong>, led by <strong>Maria Del Sol</strong> — a United Nations ' +
+      "Verified Agent, double amputee and Brazilian champion adaptive surfer. Donations go to " +
+      '<strong>Dare2tri</strong>, funding adaptive equipment and coaching for disabled athletes.</p>' +
       '<p class="hero-quote">“Everything is a wave — and we surf them together.”</p>' +
       '<div class="hero-actions">' +
       '<a class="btn btn--primary" href="#" data-link="how-to-buy">' + PUMP_ICON + " Buy on pump.fun</a>" +
       '<a class="btn btn--ghost" href="mission" data-route>Our mission ' + ARROW + "</a>" +
-      "</div></div>" +
+      "</div>" +
+      '<ul class="trust-row">' +
+      '<li>' + VERIFIED_ICON + "United Nations Verified Agent</li>" +
+      "<li>" + PUMP_ICON + "Charity campaign on pump.fun</li>" +
+      '<li>' + HEART_ICON + "Donations to Dare2tri</li>" +
+      "</ul></div>" +
       '<figure class="portrait">' +
       '<img src="assets/photos/maria_sitting2.jpg" alt="Maria Del Sol sitting on a staircase, wearing her prosthetic legs" />' +
       '<figcaption class="portrait-badge">' +
@@ -73,6 +88,30 @@
       "</div>" +
       '<div class="scroll-cue"><span>Scroll</span><i></i></div>' +
       "</section>" +
+
+      /* The campaign — stated plainly, directly under the hero */
+      '<section class="section section--tight"><div class="wrap">' +
+      '<div class="campaign reveal">' +
+      '<div class="campaign-head">' +
+      '<span class="eyebrow">The campaign</span>' +
+      '<h2>An official charity campaign <span class="gradient-text">on pump.fun</span></h2>' +
+      "<p>This is the one and only campaign run by Maria Del Sol for the Mobility Project. " +
+      "Every buy is a public, on-chain vote for a world where disabled people can move freely.</p>" +
+      "</div>" +
+      '<ol class="campaign-steps">' +
+      '<li><span class="num">01</span><h3>A community forms</h3>' +
+      "<p>Supporters join the campaign on pump.fun — one movement, openly on-chain.</p></li>" +
+      '<li><span class="num">02</span><h3>Awareness travels</h3>' +
+      "<p>Maria carries the message through UN-verified platforms, national television and world-stage competitions.</p></li>" +
+      '<li><span class="num">03</span><h3>Mobility is funded</h3>' +
+      "<p>Donations go to <strong>Dare2tri</strong>, putting adaptive equipment and coaching in disabled athletes' hands.</p></li>" +
+      "</ol>" +
+      '<div class="campaign-foot">' +
+      '<a class="btn btn--primary" href="#" data-link="how-to-buy">' + PUMP_ICON + " Buy on pump.fun</a>" +
+      '<a class="btn btn--ghost" href="mission" data-route>Read the full mission ' + ARROW + "</a>" +
+      '<p class="campaign-note">' + SHIELD_ICON +
+      "Always launch the campaign from the button on this site. Beware of impostor tokens.</p>" +
+      "</div></div></div></section>" +
 
       /* Stats */
       '<section class="section section--tight"><div class="wrap">' +
@@ -166,18 +205,10 @@
       galleryItem("assets/life/photo_2025-12-16_12-22-56.jpg", "Maria moments") +
       "</div></div></section>" +
 
-      /* Mission teaser */
-      '<section class="section"><div class="wrap">' +
-      '<div class="mission-panel reveal">' +
-      '<span class="eyebrow">The Mobility Project</span>' +
-      '<p class="lede">When life changes the design, there is still a way.</p>' +
-      '<div class="mission-body">' +
-      "<p>The Mobility Project is a <strong>pump.fun charity campaign</strong> led by Maria Del Sol — turning courage into movement, faith into direction, strength into continuity, and self-love into lasting impact for disabled people everywhere.</p>" +
-      "</div>" +
-      '<div class="hero-actions">' +
-      '<a class="btn btn--primary" href="mission" data-route>Read the full mission ' + ARROW + "</a>" +
-      '<a class="btn btn--ghost" href="#" data-link="how-to-buy">' + PUMP_ICON + " Buy on pump.fun</a>" +
-      "</div></div></div></section>"
+      ctaBand(
+        "The Mobility Project turns courage into movement, faith into direction, and " +
+          "self-love into lasting impact for disabled people everywhere. Donations go to Dare2tri."
+      )
     );
   }
 

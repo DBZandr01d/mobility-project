@@ -1384,3 +1384,125 @@ a { color: inherit; }
 }
 
 .footer-col a.is-pending:hover { transform: none; color: var(--text-2); }
+
+/* ==========================================================================
+   Campaign clarity — what this is, stated above the fold
+   ========================================================================== */
+
+.hero-lede {
+  max-width: 620px;
+  margin-top: 18px;
+  font-size: clamp(0.98rem, 1.4vw, 1.1rem);
+  color: var(--text-2);
+}
+
+.hero-lede strong { color: var(--text); }
+
+.hero .hero-quote { margin-top: 22px; font-size: clamp(0.98rem, 1.6vw, 1.15rem); }
+
+/* Credential row under the hero CTAs */
+.trust-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 26px;
+  padding: 0;
+  list-style: none;
+}
+
+.trust-row li {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 9px 16px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: rgba(10, 10, 24, 0.55);
+  backdrop-filter: blur(10px);
+  font-size: 0.79rem;
+  font-weight: 500;
+  color: var(--text-2);
+}
+
+.trust-row svg { width: 15px; height: 15px; flex: none; color: var(--violet-soft); }
+.trust-row li:nth-child(2) svg { color: var(--sky); }
+.trust-row li:nth-child(3) svg { color: var(--violet); }
+
+/* The campaign panel */
+.campaign {
+  position: relative;
+  border: 1px solid var(--line-hi);
+  border-radius: var(--radius-lg);
+  padding: clamp(28px, 4.5vw, 60px);
+  overflow: hidden;
+  background:
+    radial-gradient(700px 340px at 8% 0%, rgba(124, 58, 237, 0.2), transparent 68%),
+    radial-gradient(620px 340px at 96% 100%, rgba(56, 189, 248, 0.16), transparent 68%),
+    var(--bg-2);
+}
+
+.campaign-head { max-width: 760px; display: flex; flex-direction: column; gap: 14px; }
+.campaign-head p { font-size: 1.04rem; }
+
+.campaign-steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 20px;
+  margin: clamp(28px, 4vw, 44px) 0 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: none;
+}
+
+.campaign-steps li {
+  padding: 24px 22px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--panel);
+  transition: border-color 0.4s var(--ease), transform 0.4s var(--ease);
+}
+
+.campaign-steps li:hover { border-color: var(--line-hi); transform: translateY(-4px); }
+
+.campaign-steps .num {
+  display: inline-grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  margin-bottom: 14px;
+  border-radius: 11px;
+  background: var(--grad-brand);
+  color: #0a0518;
+  font: 700 0.88rem/1 "Space Grotesk", sans-serif;
+}
+
+.campaign-steps h3 { font-size: 1.08rem; margin-bottom: 7px; }
+.campaign-steps p { font-size: 0.93rem; }
+
+.campaign-foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px 16px;
+  margin-top: clamp(26px, 3.5vw, 38px);
+  padding-top: clamp(24px, 3vw, 32px);
+  border-top: 1px solid var(--line);
+}
+
+.campaign-note {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  margin: 0;
+  font-size: 0.83rem;
+  color: var(--text-3);
+}
+
+.campaign-note svg { width: 16px; height: 16px; flex: none; color: var(--sky); }
+
+@media (max-width: 640px) {
+  .trust-row { gap: 8px; }
+  .trust-row li { font-size: 0.74rem; padding: 8px 13px; }
+  .campaign-foot .btn { flex: 1 1 100%; }
+  .campaign-note { font-size: 0.79rem; }
+}
