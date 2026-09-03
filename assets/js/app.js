@@ -305,13 +305,25 @@
     });
     video.addEventListener("error", end);
 
-    var play = video.play();
-    if (play && play.catch) play.catch(function () { /* autoplay blocked */ });
+    // The film is a large file. Show the poster frame while it buffers rather
+    // than treating "not ready yet" as a failure — the old 4s readyState check
+    // skipped the intro entirely on slower connections.
+    video.addEventListener("playing", function () {
+      intro.classList.add("is-playing");
+    });
 
-    // Never let a stalled asset trap the visitor.
+    var play = video.play();
+    if (play && play.catch) {
+      play.catch(function () {
+        // Autoplay refused: the poster frame and the Enter button still work.
+        intro.classList.add("is-static");
+      });
+    }
+
+    // Only bail if nothing has actually arrived after a long wait.
     setTimeout(function () {
-      if (video.readyState === 0) end();
-    }, 4000);
+      if (video.currentTime === 0 && video.readyState < 2) end();
+    }, 15000);
   }
 
   /* ------------------------------------------------------------ pump.fun */

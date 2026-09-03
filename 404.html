@@ -59,9 +59,18 @@
 
     <!-- ── Intro film ─────────────────────────────────────────────────── -->
     <div class="intro" id="intro" role="dialog" aria-label="Introduction film">
-      <video id="introVideo" autoplay muted playsinline preload="auto">
+      <video
+        id="introVideo"
+        autoplay
+        muted
+        playsinline
+        webkit-playsinline
+        preload="auto"
+        poster="assets/photos/maria_sitting.jpg"
+      >
         <source src="assets/video/intro.mp4" type="video/mp4" />
       </video>
+      <div class="intro-scrim" aria-hidden="true"></div>
       <div class="intro-mark">
         <img src="assets/img/logo-mark.png" alt="" />
         <b>Mobility Project</b>
