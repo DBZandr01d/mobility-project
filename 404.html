@@ -21,20 +21,20 @@
     </script>
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <title>The Mobility Project — by Maria Del Sol</title>
+    <title>Mobility Project — by Maria Del Sol</title>
     <meta
       name="description"
-      content="The Mobility Project is a pump.fun charity campaign led by Maria Del Sol, United Nations Verified Agent, adaptive surfer and double amputee — redesigning mobility and hope for disabled people worldwide."
+      content="Mobility Project, founded by Maria Del Sol — adaptive surfing champion and disability advocate — helps fund adaptive equipment, coaching and access to sport. Donations are made to Dare2tri."
     />
-    <meta name="theme-color" content="#06060f" />
-    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#f4f2eb" />
+    <meta name="color-scheme" content="light" />
 
     <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="The Mobility Project" />
-    <meta property="og:title" content="The Mobility Project — by Maria Del Sol" />
+    <meta property="og:site_name" content="Mobility Project" />
+    <meta property="og:title" content="Mobility Project — by Maria Del Sol" />
     <meta
       property="og:description"
-      content="A pump.fun charity campaign led by Maria Del Sol, United Nations Verified Agent — turning courage into movement for disabled people worldwide."
+      content="Founded by Maria Del Sol, adaptive surfing champion and disability advocate. Helping fund adaptive equipment, coaching and access to sport."
     />
     <meta property="og:image" content="assets/img/logo.png" />
     <meta name="twitter:card" content="summary_large_image" />
@@ -47,14 +47,14 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300;1,6..72,400&family=Inter:wght@400;450;500;600&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="assets/css/app.css" />
   </head>
 
-  <body>
-    <div class="aurora" aria-hidden="true"></div>
+  <body data-campaign="pending">
+    <a class="skip-link" href="#view">Skip to content</a>
 
     <!-- ── Intro film ─────────────────────────────────────────────────── -->
     <div class="intro" id="intro" role="dialog" aria-label="Introduction film">
@@ -67,18 +67,18 @@
       </div>
       <button class="intro-skip" id="introSkip" type="button">
         Enter the site
-        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.4">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
           <path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round" />
         </svg>
       </button>
       <div class="intro-progress" id="introProgress"></div>
     </div>
 
-    <!-- ── Header ─────────────────────────────────────────────────────── -->
-    <header class="site-header" id="header">
-      <div class="wrap">
-        <a class="brand" href="" data-route>
-          <img src="assets/img/logo-mark.png" alt="The Mobility Project" />
+    <!-- ── Masthead ───────────────────────────────────────────────────── -->
+    <header class="masthead" id="header">
+      <div class="shell">
+        <a class="brand" href="" data-route aria-label="Mobility Project — home">
+          <img src="assets/img/logo-mark.png" alt="" />
           <span class="brand-name">
             <b>Mobility Project</b>
             <span>by Maria Del Sol</span>
@@ -100,27 +100,27 @@
 
     <!-- ── Footer ─────────────────────────────────────────────────────── -->
     <footer class="site-footer">
-      <div class="wrap">
+      <div class="shell">
         <div class="footer-grid">
           <div class="footer-brand">
-            <img src="assets/img/logo-wide.png" alt="The Mobility Project" />
+            <img src="assets/img/logo-lockup.png" alt="Mobility Project" />
             <p>
-              A pump.fun charity campaign led by Maria Del Sol — United Nations
-              Verified Agent — redesigning mobility and hope for disabled people
-              everywhere.
+              Founded by Maria Del Sol — adaptive surfing champion, double
+              amputee and disability advocate. Helping fund adaptive equipment,
+              coaching and access to sport.
             </p>
             <div class="socials">
               <a href="https://www.instagram.com/mariadosolglobal/" target="_blank" rel="noopener" aria-label="Instagram">
-                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.2c3.2 0 3.6 0 4.9.07 1.2.05 1.8.25 2.2.42.6.22 1 .48 1.4.9.4.4.7.8.9 1.4.2.4.4 1 .4 2.2.1 1.3.1 1.7.1 4.9s0 3.6-.1 4.9c0 1.2-.2 1.8-.4 2.2-.2.6-.5 1-.9 1.4-.4.4-.8.7-1.4.9-.4.2-1 .4-2.2.4-1.3.1-1.7.1-4.9.1s-3.6 0-4.9-.1c-1.2 0-1.8-.2-2.2-.4-.6-.2-1-.5-1.4-.9-.4-.4-.7-.8-.9-1.4-.2-.4-.4-1-.4-2.2C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.9c0-1.2.2-1.8.4-2.2.2-.6.5-1 .9-1.4.4-.4.8-.7 1.4-.9.4-.2 1-.4 2.2-.4C8.4 2.2 8.8 2.2 12 2.2Zm0 1.8c-3.1 0-3.5 0-4.7.07-1.1.05-1.7.24-2.1.4-.5.2-.9.44-1.3.83-.4.4-.63.8-.83 1.3-.16.4-.35 1-.4 2.1C2.6 9.9 2.6 10.3 2.6 12s0 2.1.07 3.3c.05 1.1.24 1.7.4 2.1.2.5.44.9.83 1.3.4.4.8.63 1.3.83.4.16 1 .35 2.1.4 1.2.07 1.6.07 4.7.07s3.5 0 4.7-.07c1.1-.05 1.7-.24 2.1-.4.5-.2.9-.44 1.3-.83.4-.4.63-.8.83-1.3.16-.4.35-1 .4-2.1.07-1.2.07-1.6.07-3.3s0-2.1-.07-3.3c-.05-1.1-.24-1.7-.4-2.1-.2-.5-.44-.9-.83-1.3-.4-.4-.8-.63-1.3-.83-.4-.16-1-.35-2.1-.4C15.5 4 15.1 4 12 4Zm0 3.1a4.9 4.9 0 1 1 0 9.8 4.9 4.9 0 0 1 0-9.8Zm0 8a3.1 3.1 0 1 0 0-6.2 3.1 3.1 0 0 0 0 6.2Zm6.2-8.2a1.15 1.15 0 1 1-2.3 0 1.15 1.15 0 0 1 2.3 0Z"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.2c3.2 0 3.6 0 4.9.07 1.2.05 1.8.25 2.2.42.6.22 1 .48 1.4.9.4.4.7.8.9 1.4.2.4.4 1 .4 2.2.1 1.3.1 1.7.1 4.9s0 3.6-.1 4.9c0 1.2-.2 1.8-.4 2.2-.2.6-.5 1-.9 1.4-.4.4-.8.7-1.4.9-.4.2-1 .4-2.2.4-1.3.1-1.7.1-4.9.1s-3.6 0-4.9-.1c-1.2 0-1.8-.2-2.2-.4-.6-.2-1-.5-1.4-.9-.4-.4-.7-.8-.9-1.4-.2-.4-.4-1-.4-2.2C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.9c0-1.2.2-1.8.4-2.2.2-.6.5-1 .9-1.4.4-.4.8-.7 1.4-.9.4-.2 1-.4 2.2-.4C8.4 2.2 8.8 2.2 12 2.2Zm0 1.8c-3.1 0-3.5 0-4.7.07-1.1.05-1.7.24-2.1.4-.5.2-.9.44-1.3.83-.4.4-.63.8-.83 1.3-.16.4-.35 1-.4 2.1C2.6 9.9 2.6 10.3 2.6 12s0 2.1.07 3.3c.05 1.1.24 1.7.4 2.1.2.5.44.9.83 1.3.4.4.8.63 1.3.83.4.16 1 .35 2.1.4 1.2.07 1.6.07 4.7.07s3.5 0 4.7-.07c1.1-.05 1.7-.24 2.1-.4.5-.2.9-.44 1.3-.83.4-.4.63-.8.83-1.3.16-.4.35-1 .4-2.1.07-1.2.07-1.6.07-3.3s0-2.1-.07-3.3c-.05-1.1-.24-1.7-.4-2.1-.2-.5-.44-.9-.83-1.3-.4-.4-.8-.63-1.3-.83-.4-.16-1-.35-2.1-.4C15.5 4 15.1 4 12 4Zm0 3.1a4.9 4.9 0 1 1 0 9.8 4.9 4.9 0 0 1 0-9.8Zm0 8a3.1 3.1 0 1 0 0-6.2 3.1 3.1 0 0 0 0 6.2Zm6.2-8.2a1.15 1.15 0 1 1-2.3 0 1.15 1.15 0 0 1 2.3 0Z"/></svg>
               </a>
-              <a href="https://x.com/i/communities/2038728348134756564" target="_blank" rel="noopener" aria-label="X Community">
-                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.24 2.25h3.31l-7.23 8.26 8.5 11.24h-6.65l-5.21-6.82-5.96 6.82H1.68l7.73-8.84L1.25 2.25h6.82l4.71 6.23 5.46-6.23Zm-1.16 17.52h1.83L7.01 4.13H5.05l12.03 15.64Z"/></svg>
+              <a href="https://x.com/i/communities/2038728348134756564" target="_blank" rel="noopener" aria-label="X community">
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.24 2.25h3.31l-7.23 8.26 8.5 11.24h-6.65l-5.21-6.82-5.96 6.82H1.68l7.73-8.84L1.25 2.25h6.82l4.71 6.23 5.46-6.23Zm-1.16 17.52h1.83L7.01 4.13H5.05l12.03 15.64Z"/></svg>
               </a>
               <a href="https://www.tiktok.com/@mariadosolglobal" target="_blank" rel="noopener" aria-label="TikTok">
-                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/></svg>
               </a>
               <a href="https://www.youtube.com/@mariadosolglobal" target="_blank" rel="noopener" aria-label="YouTube">
-                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
               </a>
             </div>
           </div>
@@ -128,7 +128,7 @@
           <div class="footer-col">
             <h4>Explore</h4>
             <a href="" data-route>My Story</a>
-            <a href="mission" data-route>My Mission</a>
+            <a href="mission" data-route>Mission</a>
             <a href="interviews" data-route>Interviews</a>
             <a href="books" data-route>Books</a>
             <a href="competitions" data-route>Competitions</a>
@@ -136,16 +136,16 @@
 
           <div class="footer-col">
             <h4>The Campaign</h4>
-            <a href="#" data-link="how-to-buy">Buy on pump.fun</a>
-            <a href="https://x.com/i/communities/2038728348134756564" target="_blank" rel="noopener">X Community</a>
+            <a href="#" data-link="how-to-buy">Support the Project</a>
+            <a href="https://x.com/i/communities/2038728348134756564" target="_blank" rel="noopener">X community</a>
             <a href="https://dare2tri.org/" target="_blank" rel="noopener">Dare2tri</a>
             <a href="https://www.youtube.com/watch?v=bckkxzMjLCI" target="_blank" rel="noopener">Free masterclass</a>
           </div>
         </div>
 
         <div class="footer-note">
-          <span>© <span id="year">2026</span> The Mobility Project — a project by Maria Del Sol.</span>
-          <span>Everything is a wave. A new design in motion.</span>
+          <span>© <span id="year">2026</span> Mobility Project — a project by Maria Del Sol.</span>
+          <span>Everything is a wave — and we surf them together.</span>
         </div>
       </div>
     </footer>

@@ -50,11 +50,8 @@
   function navMarkup(isDrawer) {
     return NAV_ITEMS.map(function (item) {
       if (item.cta) {
-        return (
-          '<a class="btn btn--primary btn--sm" href="#" data-link="how-to-buy">' +
-          item.label +
-          "</a>"
-        );
+        var cls = isDrawer ? "btn btn--ocean" : "btn btn--ocean btn--sm";
+        return '<a class="' + cls + '" href="#" data-link="how-to-buy">' + item.label + "</a>";
       }
       if (item.external) {
         return (
@@ -183,7 +180,7 @@
   if (FILE_MODE) window.addEventListener("hashchange", function () { render(); });
 
   function onScroll() {
-    header.classList.toggle("is-stuck", window.scrollY > 24);
+    header.classList.toggle("is-stuck", window.scrollY > 8);
   }
   window.addEventListener("scroll", onScroll, { passive: true });
 

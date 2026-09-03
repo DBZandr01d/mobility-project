@@ -1,54 +1,67 @@
 /* ==========================================================================
-   The Mobility Project — route views
-   Every route returns a plain HTML string. Links marked [data-route] are
-   intercepted by the router so the address bar never shows a ".html" file.
+   Mobility Project — route views
+   Each route returns an HTML string. Links marked [data-route] are intercepted
+   by the router, so the address bar never shows a ".html" file.
    ========================================================================== */
 
 (function (global) {
   "use strict";
 
   var ARROW =
-    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
-
-  var PUMP_ICON =
-    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>';
-
-  var SHIELD_ICON =
-    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.6 4.6 5.8v5.6c0 4.4 3.1 8.5 7.4 9.9 4.3-1.4 7.4-5.5 7.4-9.9V5.8L12 2.6Z"/><path d="m9.2 11.9 2 2 3.6-3.7"/></svg>';
-
-  var HEART_ICON =
-    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1 1.1L12 21.2l7.8-7.7 1-1.1a5.5 5.5 0 0 0 0-7.8Z"/></svg>';
-
-  var VERIFIED_ICON =
-    '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 1.6 14.6 4l3.4-.3.9 3.3 3 1.7-1.3 3.2 1.3 3.2-3 1.7-.9 3.3-3.4-.3L12 22.4 9.4 20l-3.4.3-.9-3.3-3-1.7L3.4 12 2.1 8.8l3-1.7.9-3.3L9.4 4 12 1.6Zm-1.2 13.9 5.6-5.6-1.4-1.4-4.2 4.2-2-2L7.4 12l3.4 3.5Z"/></svg>';
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
 
   /* ---------------------------------------------------------------- shared */
 
-  function pageHero(opts) {
+  /** Primary support CTA — label stays constant; config.js handles the state. */
+  function supportBtn(variant) {
     return (
-      '<section class="hero hero--page">' +
-      '<div class="hero-media"><img src="' + opts.image + '" alt="" /></div>' +
-      '<span class="hero-glow hero-glow--a"></span>' +
-      '<span class="hero-glow hero-glow--b"></span>' +
-      '<div class="wrap hero-inner">' +
-      '<span class="eyebrow">' + opts.eyebrow + "</span>" +
-      "<h1>" + opts.title + '<em class="gradient-text">' + opts.titleAccent + "</em></h1>" +
-      "<p class=\"hero-quote\">" + opts.lede + "</p>" +
-      "</div></section>"
+      '<a class="btn ' + (variant || "btn--ocean") + '" href="#" data-link="how-to-buy">' +
+      "Support the Project</a>"
     );
   }
 
-  function ctaBand(text) {
+  /** Support CTA plus an optional secondary action and the pre-launch note. */
+  function supportGroup(variant, secondary, note) {
     return (
-      '<section class="section section--tight"><div class="wrap">' +
-      '<div class="cta-band reveal">' +
-      '<img class="mark" src="assets/img/logo-wide.png" alt="The Mobility Project" />' +
-      '<h2>Back the <span class="gradient-text">Mobility Project</span></h2>' +
+      '<div class="cta-group">' +
+      '<div class="actions">' + supportBtn(variant) + (secondary || "") + "</div>" +
+      '<p class="cta-note when-pending">The campaign opens soon.</p>' +
+      (note ? '<p class="cta-note">' + note + "</p>" : "") +
+      "</div>"
+    );
+  }
+
+  function marker(num, title) {
+    return '<p class="marker"><span>' + num + "</span><span>" + title + "</span></p>";
+  }
+
+  /** Section head for the inner routes. */
+  function pagehead(o) {
+    return (
+      '<header class="pagehead"><div class="shell">' +
+      '<span class="label">' + o.label + "</span>" +
+      "<h1>" + o.title + (o.titleEm ? "<em>" + o.titleEm + "</em>" : "") + "</h1>" +
+      '<p class="lede">' + o.lede + "</p>" +
+      (o.image
+        ? '<figure class="pagehead-figure"><img src="' + o.image + '" alt="' + o.alt + '" /></figure>'
+        : "") +
+      "</div></header>"
+    );
+  }
+
+  /** Closing call to action, over a photograph. */
+  function closing(text) {
+    return (
+      '<section class="closing on-dark">' +
+      '<img class="band-bg" src="assets/competitions/4.jpg" alt="" aria-hidden="true" />' +
+      '<div class="shell">' +
+      "<h2>Help make mobility possible.</h2>" +
       "<p>" + text + "</p>" +
-      '<div class="hero-actions">' +
-      '<a class="btn btn--primary" href="#" data-link="how-to-buy">' + PUMP_ICON + " Buy on pump.fun</a>" +
-      '<a class="btn btn--ghost" href="mission" data-route>Read the mission ' + ARROW + "</a>" +
-      "</div></div></div></section>"
+      supportGroup(
+        "btn--solid",
+        '<a class="btn btn--line" href="mission" data-route>Explore the Mission</a>'
+      ) +
+      "</div></section>"
     );
   }
 
@@ -56,158 +69,239 @@
 
   function story() {
     return (
-      /* Hero */
-      '<section class="hero hero--split" id="top">' +
-      '<span class="hero-glow hero-glow--a"></span>' +
-      '<span class="hero-glow hero-glow--b"></span>' +
-      '<div class="wrap">' +
-      '<div class="hero-inner">' +
-      '<span class="eyebrow">Official charity campaign on pump.fun</span>' +
-      '<h1>Mobility is a right,<em class="gradient-text">not a privilege.</em></h1>' +
-      '<p class="hero-lede">The <strong>Mobility Project</strong> is a charity campaign on ' +
-      '<strong>pump.fun</strong>, led by <strong>Maria Del Sol</strong> — a United Nations ' +
-      "Verified Agent, double amputee and Brazilian champion adaptive surfer. Donations go to " +
-      '<strong>Dare2tri</strong>, funding adaptive equipment and coaching for disabled athletes.</p>' +
-      '<p class="hero-quote">“Everything is a wave — and we surf them together.”</p>' +
-      '<div class="hero-actions">' +
-      '<a class="btn btn--primary" href="#" data-link="how-to-buy">' + PUMP_ICON + " Buy on pump.fun</a>" +
-      '<a class="btn btn--ghost" href="mission" data-route>Our mission ' + ARROW + "</a>" +
+      /* 1 — Hero */
+      '<section class="hero"><div class="shell hero-grid">' +
+      '<div class="hero-copy">' +
+      '<span class="label">A campaign for adaptive mobility</span>' +
+      "<h1>Mobility is a right,<em>not a privilege.</em></h1>" +
+      '<p class="lede">Founded by Maria Del Sol — adaptive surfing champion and ' +
+      "disability advocate — Mobility Project helps fund adaptive equipment, " +
+      "coaching and access to sport.</p>" +
+      supportGroup(
+        "btn--ocean",
+        '<a class="link" href="#story">Read Maria\'s story ' + ARROW + "</a>"
+      ) +
       "</div>" +
-      '<ul class="trust-row">' +
-      '<li>' + VERIFIED_ICON + "United Nations Verified Agent</li>" +
-      "<li>" + PUMP_ICON + "Charity campaign on pump.fun</li>" +
-      '<li>' + HEART_ICON + "Donations to Dare2tri</li>" +
-      "</ul></div>" +
-      '<figure class="portrait">' +
-      '<img src="assets/photos/maria_sitting2.jpg" alt="Maria Del Sol sitting on a staircase, wearing her prosthetic legs" />' +
-      '<figcaption class="portrait-badge">' +
-      '<img src="assets/photos/verified.jpeg" alt="" />' +
-      VERIFIED_ICON +
-      "<span>United Nations Verified Agent</span>" +
-      "</figcaption></figure>" +
-      "</div>" +
-      '<div class="scroll-cue"><span>Scroll</span><i></i></div>' +
-      "</section>" +
+      '<figure class="hero-figure">' +
+      '<img src="assets/photos/maria_sitting2.jpg" alt="Maria Del Sol seated on a staircase, wearing her prosthetic legs" />' +
+      '<figcaption class="figure-caption">Maria Del Sol. Double amputee since infancy; ' +
+      "Brazilian Parasurf champion.</figcaption>" +
+      "</figure>" +
+      "</div></section>" +
 
-      /* The campaign — stated plainly, directly under the hero */
-      '<section class="section section--tight"><div class="wrap">' +
-      '<div class="campaign reveal">' +
-      '<div class="campaign-head">' +
-      '<span class="eyebrow">The campaign</span>' +
-      '<h2>An official charity campaign <span class="gradient-text">on pump.fun</span></h2>' +
-      "<p>This is the one and only campaign run by Maria Del Sol for the Mobility Project. " +
-      "Every buy is a public, on-chain vote for a world where disabled people can move freely.</p>" +
-      "</div>" +
-      '<ol class="campaign-steps">' +
-      '<li><span class="num">01</span><h3>A community forms</h3>' +
-      "<p>Supporters join the campaign on pump.fun — one movement, openly on-chain.</p></li>" +
-      '<li><span class="num">02</span><h3>Awareness travels</h3>' +
-      "<p>Maria carries the message through UN-verified platforms, national television and world-stage competitions.</p></li>" +
-      '<li><span class="num">03</span><h3>Mobility is funded</h3>' +
-      "<p>Donations go to <strong>Dare2tri</strong>, putting adaptive equipment and coaching in disabled athletes' hands.</p></li>" +
-      "</ol>" +
-      '<div class="campaign-foot">' +
-      '<a class="btn btn--primary" href="#" data-link="how-to-buy">' + PUMP_ICON + " Buy on pump.fun</a>" +
-      '<a class="btn btn--ghost" href="mission" data-route>Read the full mission ' + ARROW + "</a>" +
-      '<p class="campaign-note">' + SHIELD_ICON +
-      "Always launch the campaign from the button on this site. Beware of impostor tokens.</p>" +
-      "</div></div></div></section>" +
+      /* 2 — Credibility */
+      '<section class="section--tight section--flush-top"><div class="shell">' +
+      '<dl class="credibility reveal">' +
+      "<div><dt>United Nations</dt><dd>Verified Agent, in partnership with TikTok.</dd></div>" +
+      '<div><dt>Dare2tri</dt><dd>Donations will be made to ' +
+      '<a href="https://dare2tri.org/" target="_blank" rel="noopener">Dare2tri</a>, ' +
+      "which brings adaptive sport to athletes with physical disabilities and visual impairments.</dd></div>" +
+      "<div><dt>pump.fun</dt><dd>The platform the campaign uses to raise funds and gather its community.</dd></div>" +
+      "</dl></div></section>" +
 
-      /* Stats */
-      '<section class="section section--tight"><div class="wrap">' +
-      '<div class="stats reveal">' +
-      '<div class="stat"><b>45</b><span>Days old when she lost both legs</span></div>' +
-      '<div class="stat"><b>9th</b><span>In the world — WSL 2025</span></div>' +
-      '<div class="stat"><b>3</b><span>Books authored &amp; co-authored</span></div>' +
-      '<div class="stat"><b>5</b><span>Children, and a grandmother</span></div>' +
+      /* 3 — Quote over ocean photography */
+      '<section class="band">' +
+      '<img class="band-bg" src="assets/photos/maria_surfing.jpg" alt="Maria Del Sol surfing" />' +
+      '<div class="shell">' +
+      "<blockquote>Everything is a wave — and we surf them together.</blockquote>" +
+      "<cite>Maria Del Sol</cite>" +
+      "</div></section>" +
+
+      /* 4 — Maria's story */
+      '<section class="section" id="story"><div class="shell">' +
+      marker("01", "My Story") +
+
+      '<div class="grid" style="align-items:end">' +
+      '<div class="col-7 reveal">' +
+      "<h2>From the shoreline to the world stage</h2>" +
+      "</div>" +
+      '<div class="col-5 reveal">' +
+      '<p class="lede">A life spent proving that limitation is a design problem, ' +
+      "not a destiny.</p>" +
+      "</div></div>" +
+
+      '<div style="margin-top:clamp(40px,5vw,72px)">' +
+
+      '<div class="row reveal">' +
+      '<figure class="figure figure--wide"><img src="assets/competitions/3.jpg" alt="Maria carrying her board at a World Surf League event" loading="lazy" /></figure>' +
+      '<div class="row-body">' +
+      '<span class="label">The ocean</span>' +
+      "<h3>Vice champion of Brazil, top ten in the world</h3>" +
+      '<div class="prose"><p>I lost both my legs when I was just <strong>45 days old</strong>. ' +
+      "But that never stopped me from chasing the waves. Today, I am the " +
+      "<strong>Brazilian Surfing Vice Champion</strong> and ranked among the " +
+      "<strong>Top 10 in the world</strong>. The ocean taught me that limitations " +
+      "exist only in the mind.</p></div>" +
+      '<a class="link" href="competitions" data-route>See competition results ' + ARROW + "</a>" +
+      "</div></div>" +
+
+      '<div class="row row--reverse reveal">' +
+      '<figure class="figure figure--tall"><img src="assets/photos/verified.jpeg" alt="Portrait of Maria Del Sol" loading="lazy" /></figure>' +
+      '<div class="row-body">' +
+      '<span class="label">Recognition</span>' +
+      "<h3>A United Nations Verified Agent</h3>" +
+      "<div class=\"prose\"><p>I am proud to be a <strong>United Nations Verified Agent</strong> " +
+      "in partnership with TikTok, using my platform to spread awareness, inspire change, " +
+      "and amplify voices that deserve to be heard on a global stage.</p></div>" +
+      '<a class="link" href="https://www.tiktok.com/@mariadosolglobal" target="_blank" rel="noopener">Follow on TikTok ' + ARROW + "</a>" +
+      "</div></div>" +
+
+      '<div class="row reveal">' +
+      '<figure class="figure figure--tall"><img src="assets/photos/maria_conference.jpg" alt="Maria speaking on stage with a microphone" loading="lazy" /></figure>' +
+      '<div class="row-body">' +
+      '<span class="label">The voice</span>' +
+      "<h3>Coaching, mentoring, speaking</h3>" +
+      "<div class=\"prose\"><p>As a <strong>certified Life Coach trained in the Tony Robbins " +
+      "method</strong>, I help others unlock their true potential. My voice carries a message of " +
+      "<strong>courage, transformation, and spiritual strength</strong>. Every person I mentor " +
+      "is a new opportunity to ignite change. Join my free masterclass and start your " +
+      "transformation today.</p></div>" +
+      '<a class="link" href="https://www.youtube.com/watch?v=bckkxzMjLCI" target="_blank" rel="noopener">Watch the free masterclass ' + ARROW + "</a>" +
+      "</div></div>" +
+
+      '<div class="row row--reverse reveal">' +
+      '<figure class="figure figure--tall"><img src="assets/life/photo_2025-12-16_12-22-48.jpg" alt="Maria at golden hour, hand resting over her heart" loading="lazy" /></figure>' +
+      '<div class="row-body">' +
+      '<span class="label">The anchor</span>' +
+      "<h3>Mother of five, and a grandmother</h3>" +
+      "<div class=\"prose\"><p>I am a <strong>mother of five beautiful children</strong> and a " +
+      "proud grandmother. My family is my anchor, my strength, and my greatest wave. They remind " +
+      "me every day why I fight to create a more inclusive world.</p></div>" +
+      "</div></div>" +
+
+      '<div class="row reveal">' +
+      '<figure class="figure figure--tall"><img src="assets/photos/prosthetic_legs.jpg" alt="Maria in athletic gear with her running prosthetics" loading="lazy" /></figure>' +
+      '<div class="row-body">' +
+      '<span class="label">The proof</span>' +
+      "<h3>Athlete, author, artist</h3>" +
+      "<div class=\"prose\"><p>From a double amputee to a <strong>high-performance athlete, " +
+      "author, and artist</strong> — my journey proves that resilience has no limits. I've " +
+      "become a symbol of what's possible when you refuse to let the world define your " +
+      "capabilities.</p></div>" +
+      '<a class="link" href="books" data-route>Read the books ' + ARROW + "</a>" +
+      "</div></div>" +
+
       "</div></div></section>" +
 
-      /* Who am I */
-      '<section class="section section--tight"><div class="wrap">' +
-      '<div class="showcase reveal">' +
-      '<div class="showcase-img"><img src="assets/photos/main_pic.jpg" alt="Who am I? — Maria Del Sol at a glance" loading="lazy" /></div>' +
-      '<div class="showcase-body">' +
-      '<span class="eyebrow">Who am I?</span>' +
-      '<h2>Maria <span class="gradient-text">Del Sol</span></h2>' +
-      "<p>Double amputee since babyhood, Brazilian champion adaptive surfer, mother, author and mentor — and the person behind the Mobility Project.</p>" +
-      '<div class="facts">' +
-      "<span>Surfer &amp; Brazilian Champion</span>" +
-      "<span>6a in the world</span>" +
-      "<span>Double legged amputee since baby</span>" +
-      "<span>Mother of 5 girls</span>" +
-      "<span>International Mentor &amp; Life Coach</span>" +
-      "<span>Tony Robbins Method</span>" +
-      "<span>A Course in Miracles mentor</span>" +
-      "<span>Trilingual speaker</span>" +
-      "<span>Wrote 4 books</span>" +
-      "<span>Artist</span>" +
+      /* Who am I — the original infographic, shown whole */
+      '<section class="section section--sand"><div class="shell">' +
+      '<div class="row reveal">' +
+      '<figure class="figure"><img src="assets/photos/main_pic.jpg" alt="Who am I? — a portrait of Maria Del Sol annotated with her roles" loading="lazy" /></figure>' +
+      '<div class="row-body">' +
+      '<span class="label">Who am I?</span>' +
+      "<h3>Maria Del Sol</h3>" +
+      '<div class="prose"><p>Double amputee since infancy, Brazilian champion adaptive ' +
+      "surfer, mother, author and mentor — and the person behind Mobility Project.</p></div>" +
+      '<ul class="attr-list" style="margin-top:24px">' +
+      "<li>Surfer &amp; Brazilian Champion</li>" +
+      "<li>6a in the world</li>" +
+      "<li>Double legged amputee since baby</li>" +
+      "<li>Mother of 5 girls</li>" +
+      "<li>International Mentor &amp; Life Coach</li>" +
+      "<li>Tony Robbins Method</li>" +
+      "<li>A Course in Miracles mentor</li>" +
+      "<li>Trilingual speaker</li>" +
+      "<li>Wrote 4 books</li>" +
+      "<li>Artist</li>" +
+      "</ul></div></div>" +
+
+      '<div class="facts-row reveal" style="margin-top:clamp(48px,6vw,80px)">' +
+      "<div><b>45</b><span>Days old when she lost both legs</span></div>" +
+      "<div><b>9th</b><span>In the world — World Surf League, 2025</span></div>" +
+      "<div><b>3</b><span>Books authored and co-authored</span></div>" +
+      "<div><b>5</b><span>Children, and a grandmother</span></div>" +
+      "</div></div></section>" +
+
+      /* 5 — The mission */
+      '<section class="section"><div class="shell">' +
+      marker("02", "The Mission") +
+      '<div class="grid">' +
+      '<div class="col-7 reveal">' +
+      "<h2>When life changes the design, there is still a way.</h2>" +
+      "</div>" +
+      '<div class="col-5 reveal"><div class="prose">' +
+      "<p>Mobility and hope can be redesigned through <strong>courage, faith, and inner " +
+      "strength</strong> — grounded in loving yourself as you are.</p>" +
+      "<p>From this place of self-acceptance and alignment, movement becomes possible, " +
+      "visibility expands, and ableism is challenged by example, not by pity.</p>" +
+      '<a class="link" href="mission" data-route>Read the full mission ' + ARROW + "</a>" +
       "</div></div></div></div></section>" +
 
-      /* Journey */
-      '<section class="section"><div class="wrap">' +
-      '<div class="section-head reveal">' +
-      '<span class="eyebrow">My journey</span>' +
-      '<h2>From the shoreline to the <span class="gradient-text">world stage</span></h2>' +
-      "<p>The story behind the project — a life spent proving that limitation is a design problem, not a destiny.</p>" +
+      /* 6 — Where the funds go */
+      '<section class="section section--dark"><div class="shell">' +
+      marker("03", "Where the funds go") +
+      '<div class="grid" style="margin-bottom:clamp(36px,4.5vw,60px)">' +
+      '<div class="col-7 reveal"><h2>Equipment, coaching, and a way into sport.</h2></div>' +
+      '<div class="col-5 reveal"><p class="lede">Donations will be made to <strong>Dare2tri</strong>, ' +
+      "which brings adaptive sport to athletes with physical disabilities and visual " +
+      "impairments.</p></div>" +
       "</div>" +
-
-      '<div class="bento">' +
-
-      '<article class="card card--wide span-6 reveal">' +
-      '<div class="card-media"><img src="assets/photos/maria_surfing.jpg" alt="Maria surfing" loading="lazy" /></div>' +
-      '<div class="card-body">' +
-      '<span class="eyebrow">The ocean</span>' +
-      "<p>I lost both my legs when I was just <strong>45 days old</strong>. But that never stopped me from chasing the waves. Today, I am the <strong>Brazilian Surfing Vice Champion</strong> and ranked among the <strong>Top 10 in the world</strong>. The ocean taught me that limitations exist only in the mind.</p>" +
-      "</div></article>" +
-
-      '<article class="card span-3 reveal">' +
-      '<div class="card-media"><img src="assets/photos/verified.jpeg" alt="Maria — UN Verified Agent" loading="lazy" /></div>' +
-      '<div class="card-body">' +
-      '<span class="eyebrow">Recognition</span>' +
-      "<p>I am proud to be a <strong>United Nations Verified Agent</strong> in partnership with TikTok, using my platform to spread awareness, inspire change, and amplify voices that deserve to be heard on a global stage.</p>" +
-      '<a class="link-arrow" href="https://www.tiktok.com/@mariadosolglobal" target="_blank" rel="noopener">Follow on TikTok ' + ARROW + "</a>" +
-      "</div></article>" +
-
-      '<article class="card span-3 reveal">' +
-      '<div class="card-media"><img src="assets/photos/maria_conference.jpg" alt="Maria speaking on stage" loading="lazy" /></div>' +
-      '<div class="card-body">' +
-      '<span class="eyebrow">The voice</span>' +
-      "<p>As a <strong>certified Life Coach trained in the Tony Robbins method</strong>, I help others unlock their true potential. My voice carries a message of <strong>courage, transformation, and spiritual strength</strong>. Every person I mentor is a new opportunity to ignite change. Join my free masterclass and start your transformation today.</p>" +
-      '<a class="link-arrow" href="https://www.youtube.com/watch?v=bckkxzMjLCI" target="_blank" rel="noopener">Watch my free masterclass ' + ARROW + "</a>" +
-      "</div></article>" +
-
-      '<article class="card span-3 reveal">' +
-      '<div class="card-media"><img src="assets/photos/maria_fun.jpg" alt="Maria laughing outdoors" loading="lazy" /></div>' +
-      '<div class="card-body">' +
-      '<span class="eyebrow">The anchor</span>' +
-      "<p>I am a <strong>mother of five beautiful children</strong> and a proud grandmother. My family is my anchor, my strength, and my greatest wave. They remind me every day why I fight to create a more inclusive world.</p>" +
-      "</div></article>" +
-
-      '<article class="card span-3 reveal">' +
-      '<div class="card-media"><img src="assets/photos/prosthetic_legs.jpg" alt="Maria as an athlete" loading="lazy" /></div>' +
-      '<div class="card-body">' +
-      '<span class="eyebrow">The proof</span>' +
-      "<p>From a double amputee to a <strong>high-performance athlete, author, and artist</strong> — my journey proves that resilience has no limits. I've become a symbol of what's possible when you refuse to let the world define your capabilities.</p>" +
-      "</div></article>" +
-
+      '<div class="impact reveal">' +
+      "<div><h3>Adaptive equipment</h3><p>The specialist gear that makes training and " +
+      "competition physically possible in the first place.</p></div>" +
+      "<div><h3>Coaching</h3><p>Trained coaches who know adaptive sport, so athletes " +
+      "progress safely rather than alone.</p></div>" +
+      "<div><h3>Access to sport</h3><p>Getting disabled athletes to the water, the track " +
+      "and the start line — the part that quietly stops most people.</p></div>" +
       "</div></div></section>" +
 
-      /* Gallery */
-      '<section class="section"><div class="wrap">' +
-      '<div class="section-head reveal">' +
-      '<span class="eyebrow">Life in motion</span>' +
-      '<h2>Moments from the <span class="gradient-text">everyday</span></h2>' +
+      /* 7 — The campaign */
+      '<section class="section"><div class="shell">' +
+      marker("04", "The Campaign") +
+      '<div class="grid">' +
+      '<div class="col-6 reveal">' +
+      "<h2>A different way to fund mobility.</h2>" +
       "</div>" +
+      '<div class="col-6 reveal"><div class="prose">' +
+      "<p>Mobility Project raises funds through a campaign on <strong>pump.fun</strong>. " +
+      "It is a fundraising and community mechanism, not the point of the project — the " +
+      "point is getting disabled athletes moving.</p>" +
+      "<p>Supporting the campaign is public and on-chain, so the community that forms " +
+      "around it is visible to everyone.</p>" +
+      "</div></div></div>" +
+
+      '<ol class="steps reveal" style="margin-top:clamp(44px,5.5vw,72px)">' +
+      "<li><b>01</b><h3>A community forms</h3><p>Supporters join the campaign on pump.fun " +
+      "— one movement, openly on-chain.</p></li>" +
+      "<li><b>02</b><h3>Awareness travels</h3><p>Maria carries the message through " +
+      "UN-verified platforms, national television and world-stage competitions.</p></li>" +
+      "<li><b>03</b><h3>Mobility is funded</h3><p>Donations go to Dare2tri, putting adaptive " +
+      "equipment and coaching in disabled athletes' hands.</p></li>" +
+      "</ol>" +
+
+      '<div class="reveal" style="margin-top:clamp(36px,4vw,56px)">' +
+      supportGroup(
+        "btn--ocean",
+        "",
+        "Always start from the button on this site. Beware of impostor tokens."
+      ) +
+      "</div></div></section>" +
+
+      /* Life in motion */
+      '<section class="section section--sand"><div class="shell">' +
+      marker("05", "Life in Motion") +
       '<div class="gallery reveal" id="gallery">' +
       galleryItem("assets/life/photo_2025-12-16_12-22-24.jpg", "Maria in action") +
-      galleryItem("assets/life/photo_2025-12-16_12-22-48.jpg", "Maria in motion") +
+      galleryItem("assets/photos/maria_fun.jpg", "Maria fitting a prosthetic before training") +
       galleryItem("assets/life/photo_2025-12-16_12-22-52.jpg", "Maria living life") +
       galleryItem("assets/life/photo_2025-12-16_12-22-56.jpg", "Maria moments") +
       "</div></div></section>" +
 
-      ctaBand(
-        "The Mobility Project turns courage into movement, faith into direction, and " +
-          "self-love into lasting impact for disabled people everywhere. Donations go to Dare2tri."
+      /* 8 — More to explore */
+      '<section class="section"><div class="shell">' +
+      marker("06", "More to explore") +
+      '<div class="cards">' +
+      exploreCard("interviews", "assets/photos/interview.jpg", "Media", "Interviews &amp; conversations",
+        "Tony Robbins, Brazilian national news, and the story in Maria's own words.") +
+      exploreCard("books", "assets/books/3.png", "Publications", "Books &amp; publications",
+        "Three titles authored and co-authored, on leadership, resilience and motherhood.", true) +
+      exploreCard("competitions", "assets/competitions/2.jpg", "Results", "Competitions &amp; achievements",
+        "Brazilian Parasurf champion, vice champion, and top five in Hawaii.") +
+      "</div></div></section>" +
+
+      closing(
+        "Mobility Project turns courage into movement — funding adaptive equipment, " +
+        "coaching and access to sport. Donations are made to Dare2tri."
       )
     );
   }
@@ -219,49 +313,97 @@
     );
   }
 
+  function exploreCard(route, img, label, title, text, art) {
+    return (
+      '<a class="card" href="' + route + '" data-route>' +
+      '<div class="card-media' + (art ? " card-media--art" : "") + '">' +
+      '<img src="' + img + '" alt="" loading="lazy" /></div>' +
+      '<div class="card-body">' +
+      '<span class="label">' + label + "</span>" +
+      "<h3>" + title + "</h3>" +
+      "<p>" + text + "</p>" +
+      '<span class="link">View ' + ARROW + "</span>" +
+      "</div></a>"
+    );
+  }
+
   /* ----------------------------------------------------------- 2. mission */
 
   function mission() {
     return (
-      pageHero({
-        image: "assets/photos/maria_sitting.jpg",
-        eyebrow: "My mission",
+      pagehead({
+        label: "The Mission",
         title: "A new design ",
-        titleAccent: "in motion.",
+        titleEm: "in motion.",
         lede: "Mobility and hope, redesigned through courage, faith and inner strength.",
+        image: "assets/photos/maria_sitting.jpg",
+        alt: "Maria Del Sol sitting outdoors beside her surfboard",
       }) +
 
-      '<section class="section"><div class="wrap">' +
-      '<div class="mission-panel reveal">' +
-      '<span class="eyebrow">Why this exists</span>' +
-      '<p class="lede">When life changes the design, there is still a way.</p>' +
-      '<div class="mission-body">' +
-      "<p>I exist to show that mobility and hope can be redesigned through <strong>courage, faith, and inner strength</strong> — grounded in loving yourself as you are.</p>" +
-      "<p>From this place of self-acceptance and alignment, movement becomes possible, visibility expands, and ableism is challenged by example, not by pity.</p>" +
-      "<p>The <strong>Mobility Project</strong> exists to make this redesign possible — turning courage into movement, faith into direction, strength into continuity, and self-love into lasting impact.</p>" +
+      '<section class="section"><div class="shell">' +
+      marker("01", "Why this exists") +
+      '<div class="grid">' +
+      '<div class="col-6 reveal">' +
+      "<h2>When life changes the design, there is still a way.</h2>" +
+      "</div>" +
+      '<div class="col-6 reveal"><div class="prose">' +
+      "<p>I exist to show that mobility and hope can be redesigned through " +
+      "<strong>courage, faith, and inner strength</strong> — grounded in loving yourself " +
+      "as you are.</p>" +
+      "<p>From this place of self-acceptance and alignment, movement becomes possible, " +
+      "visibility expands, and ableism is challenged by example, not by pity.</p>" +
+      "<p><strong>Mobility Project</strong> exists to make this redesign possible — turning " +
+      "courage into movement, faith into direction, strength into continuity, and self-love " +
+      "into lasting impact.</p>" +
       "<p>This is my wave. A new design in motion.</p>" +
+      '<p style="font-family:var(--serif);font-style:italic;color:var(--ink);font-size:1.1rem">— Maria Del Sol</p>' +
+      "</div></div></div></div></section>" +
+
+      '<section class="section section--dark"><div class="shell">' +
+      marker("02", "Where the funds go") +
+      '<div class="grid" style="margin-bottom:clamp(36px,4.5vw,60px)">' +
+      '<div class="col-7 reveal"><h2>Equipment, coaching, and a way into sport.</h2></div>' +
+      '<div class="col-5 reveal"><p class="lede">Donations will be made to ' +
+      '<a class="link" href="https://dare2tri.org/" target="_blank" rel="noopener">Dare2tri</a> — ' +
+      "a non-profit bringing adaptive sport to athletes with physical disabilities and " +
+      "visual impairments.</p></div>" +
       "</div>" +
-      '<div class="callout">' +
-      '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" style="color:var(--sky);flex:none"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1 1.1L12 21.2l7.8-7.7 1-1.1a5.5 5.5 0 0 0 0-7.8Z" stroke-linecap="round" stroke-linejoin="round"/></svg>' +
-      '<p>Donations will be made to <a href="https://dare2tri.org/" target="_blank" rel="noopener">Dare2tri</a> — a non-profit bringing adaptive sport to athletes with physical disabilities and visual impairments.</p>' +
-      "</div>" +
-      '<p class="mission-sign">— Maria Del Sol 🌊</p>' +
+      '<div class="impact reveal">' +
+      "<div><h3>Adaptive equipment</h3><p>The specialist gear that makes training and " +
+      "competition physically possible in the first place.</p></div>" +
+      "<div><h3>Coaching</h3><p>Trained coaches who know adaptive sport, so athletes " +
+      "progress safely rather than alone.</p></div>" +
+      "<div><h3>Access to sport</h3><p>Getting disabled athletes to the water, the track " +
+      "and the start line — the part that quietly stops most people.</p></div>" +
       "</div></div></section>" +
 
-      '<section class="section"><div class="wrap">' +
-      '<div class="section-head reveal">' +
-      '<span class="eyebrow">The campaign</span>' +
-      '<h2>How the <span class="gradient-text">Mobility Project</span> works</h2>' +
-      "<p>A charity campaign on pump.fun, led by a United Nations Verified Agent who lives the cause every single day.</p>" +
-      "</div>" +
-      '<div class="steps">' +
-      '<div class="step reveal"><span class="num">01</span><h3>A community forms</h3><p>Supporters join the campaign on pump.fun and in the X community — one movement, openly on-chain.</p></div>' +
-      '<div class="step reveal"><span class="num">02</span><h3>Awareness travels</h3><p>Maria carries the message through UN-verified platforms, national television, podcasts and world-stage competitions.</p></div>' +
-      '<div class="step reveal"><span class="num">03</span><h3>Mobility is funded</h3><p>Donations go to <strong>Dare2tri</strong>, putting adaptive equipment and coaching in the hands of disabled athletes.</p></div>' +
+      '<section class="section"><div class="shell">' +
+      marker("03", "The Campaign") +
+      '<div class="grid">' +
+      '<div class="col-6 reveal"><h2>A different way to fund mobility.</h2></div>' +
+      '<div class="col-6 reveal"><div class="prose">' +
+      "<p>Mobility Project raises funds through a campaign on <strong>pump.fun</strong>, " +
+      "led by Maria Del Sol. It is a fundraising and community mechanism — the point of the " +
+      "project is getting disabled athletes moving.</p>" +
+      "</div></div></div>" +
+      '<ol class="steps reveal" style="margin-top:clamp(44px,5.5vw,72px)">' +
+      "<li><b>01</b><h3>A community forms</h3><p>Supporters join the campaign on pump.fun " +
+      "and in the X community — one movement, openly on-chain.</p></li>" +
+      "<li><b>02</b><h3>Awareness travels</h3><p>Maria carries the message through " +
+      "UN-verified platforms, national television, podcasts and world-stage competitions.</p></li>" +
+      "<li><b>03</b><h3>Mobility is funded</h3><p>Donations go to <strong>Dare2tri</strong>, " +
+      "putting adaptive equipment and coaching in the hands of disabled athletes.</p></li>" +
+      "</ol>" +
+      '<div class="reveal" style="margin-top:clamp(36px,4vw,56px)">' +
+      supportGroup(
+        "btn--ocean",
+        '<a class="link" href="https://x.com/i/communities/2038728348134756564" target="_blank" rel="noopener">Join the X community ' + ARROW + "</a>"
+      ) +
       "</div></div></section>" +
 
-      ctaBand(
-        "Every wave starts with one person paddling out. Join the campaign and help redesign mobility for people who have been told to wait."
+      closing(
+        "Every wave starts with one person paddling out. Join the campaign and help " +
+        "redesign mobility for people who have been told to wait."
       )
     );
   }
@@ -273,64 +415,60 @@
       {
         src: "assets/interviews/robbin.mp4",
         title: "Interview with Tony Robbins",
-        chip: "🎤 Featured interview",
+        label: "Featured interview",
         link: "https://www.youtube.com/watch?v=on2Zd1UOI7E",
-        featured: true,
       },
       {
         src: "assets/interviews/story.mp4",
         title: "My Life Story",
-        chip: "🌊 Personal journey",
+        label: "Personal journey",
         link: "https://www.youtube.com/watch?v=qVF1Va5f71c",
       },
       {
         src: "assets/interviews/brand.mp4",
         title: "Interview with Conforpes about the challenges of prosthetic legs",
-        chip: "🦿 Mobility &amp; challenges",
+        label: "Mobility &amp; challenges",
         link: "https://www.youtube.com/watch?v=Qq1uZMnTr04",
       },
       {
         src: "assets/interviews/news.mp4",
         title: "Interview on Balanço Geral (Brazilian national news)",
-        chip: "📺 National television",
+        label: "National television",
         link: "https://youtu.be/MKUOdGAHPZQ?si=k59AfIGU0APdQrMB",
       },
     ];
 
-    var cards = items
-      .map(function (i) {
+    var list = items
+      .map(function (i, n) {
         return (
-          '<article class="card video-card reveal' + (i.featured ? " is-featured" : "") + '">' +
+          '<article class="video-item reveal">' +
           '<div class="video-frame"><video controls preload="metadata" playsinline>' +
           '<source src="' + i.src + '" type="video/mp4" />' +
           "Your browser does not support the video tag." +
           "</video></div>" +
-          '<div class="card-body">' +
-          "<h3>" + i.title + "</h3>" +
           '<div class="video-meta">' +
-          '<span class="chip">' + i.chip + "</span>" +
-          '<a class="link-arrow" href="' + i.link + '" target="_blank" rel="noopener">Watch on YouTube ' + ARROW + "</a>" +
-          "</div></div></article>"
+          "<div><span class=\"label\">" + String(n + 1).padStart(2, "0") + " — " + i.label + "</span>" +
+          '<h3 style="margin-top:10px">' + i.title + "</h3></div>" +
+          '<a class="link" href="' + i.link + '" target="_blank" rel="noopener">Watch on YouTube ' + ARROW + "</a>" +
+          "</div></article>"
         );
       })
       .join("");
 
     return (
-      pageHero({
-        image: "assets/photos/interview.jpg",
-        eyebrow: "Interviews",
+      pagehead({
+        label: "Interviews",
         title: "Conversations that ",
-        titleAccent: "move people.",
+        titleEm: "move people.",
         lede: "Sharing my story, inspiring change, and spreading the message of courage across the world.",
+        image: "assets/photos/interview.jpg",
+        alt: "Maria Del Sol during an interview",
       }) +
-      '<section class="section"><div class="wrap">' +
-      '<div class="section-head reveal">' +
-      '<span class="eyebrow">Watch</span>' +
-      '<h2>Interviews &amp; <span class="gradient-text">appearances</span></h2>' +
-      "</div>" +
-      '<div class="videos">' + cards + "</div>" +
+      '<section class="section"><div class="shell">' +
+      marker("01", "Watch") +
+      list +
       "</div></section>" +
-      ctaBand("Every interview is one more door opened. Help us keep the message travelling.")
+      closing("Every interview is one more door opened. Help us keep the message travelling.")
     );
   }
 
@@ -340,7 +478,7 @@
     var list = [
       {
         img: "assets/books/1.png",
-        tag: "Co-Author",
+        role: "Co-author",
         title: "Livro Pessoas Comuns, Resultados Extraordinários",
         sub: "Ordinary People, Extraordinary Results",
         text:
@@ -350,7 +488,7 @@
       },
       {
         img: "assets/books/2.png",
-        tag: "Co-Author",
+        role: "Co-author",
         title: "Livro Formação de Líderes em Alta Performance",
         sub: "Formation of High-Performance Leaders",
         text:
@@ -360,8 +498,7 @@
       },
       {
         img: "assets/books/3.png",
-        tag: "Author",
-        author: true,
+        role: "Author",
         title: "Parto Sem Dor: Você Também Pode!",
         sub: "Painless Birth: You Can Too!",
         text:
@@ -371,37 +508,36 @@
       },
     ];
 
-    var cards = list
+    var rows = list
       .map(function (b) {
         return (
           '<article class="book reveal">' +
-          '<div class="book-cover"><img src="' + b.img + '" alt="' + b.title + '" loading="lazy" /></div>' +
+          '<div class="book-cover"><img src="' + b.img + '" alt="Cover of ' + b.title + '" loading="lazy" /></div>' +
           '<div class="book-info">' +
-          '<span class="tag' + (b.author ? " tag--author" : "") + '">' + b.tag + "</span>" +
-          "<h3>" + b.title + "<em>" + b.sub + "</em></h3>" +
+          '<span class="label">' + b.role + "</span>" +
+          "<h3>" + b.title + "</h3>" +
+          '<p class="subtitle">' + b.sub + "</p>" +
           "<p>" + b.text + "</p>" +
-          '<a class="btn btn--sm" href="' + b.link + '" target="_blank" rel="noopener">Get the book ' + ARROW + "</a>" +
+          '<a class="btn btn--line btn--sm" href="' + b.link + '" target="_blank" rel="noopener">Get the book</a>' +
           "</div></article>"
         );
       })
       .join("");
 
     return (
-      pageHero({
-        image: "assets/photos/maria_conference.jpg",
-        eyebrow: "Books",
+      pagehead({
+        label: "Books",
         title: "Words that ",
-        titleAccent: "transform.",
+        titleEm: "transform.",
         lede: "Stories that inspire, lessons that last, and wisdom to guide your own journey.",
+        image: "assets/photos/maria_conference.jpg",
+        alt: "Maria Del Sol speaking on stage",
       }) +
-      '<section class="section"><div class="wrap">' +
-      '<div class="section-head reveal">' +
-      '<span class="eyebrow">Publications</span>' +
-      '<h2>My books &amp; <span class="gradient-text">publications</span></h2>' +
-      "</div>" +
-      '<div class="books">' + cards + "</div>" +
+      '<section class="section"><div class="shell">' +
+      marker("01", "Publications") +
+      rows +
       "</div></section>" +
-      ctaBand("Books opened the first doors. The Mobility Project opens the next ones.")
+      closing("Books opened the first doors. Mobility Project opens the next ones.")
     );
   }
 
@@ -411,69 +547,62 @@
     var list = [
       {
         img: "assets/competitions/1.jpg",
-        badge: "2nd",
-        badgeClass: "badge--silver",
+        place: "2nd",
         year: "2025",
         title: "Brasileira de Parasurf",
-        medal: "🥈",
-        result: "Silver Medal — Vice Champion",
+        result: "Silver medal — Vice Champion",
       },
       {
         img: "assets/competitions/2.jpg",
-        badge: "1st",
-        badgeClass: "badge--gold",
+        place: "1st",
         year: "2024",
         title: "Brasileira de Parasurf",
-        medal: "🥇",
-        result: "Gold Medal — Champion",
+        result: "Gold medal — Champion",
       },
       {
         img: "assets/competitions/3.jpg",
-        badge: "5th",
-        badgeClass: "badge--blue",
+        place: "5th",
         year: "World stage",
         title: "Professionals Circuit of Hawaii",
-        medal: "🏄‍♀️",
         result: "Top 5 — World Surf League",
       },
     ];
 
-    var cards = list
+    var rows = list
       .map(function (c) {
         return (
-          '<article class="card comp reveal">' +
-          '<div class="card-media"><img src="' + c.img + '" alt="' + c.title + '" loading="lazy" />' +
-          '<div class="badge ' + c.badgeClass + '">' + c.badge + "<span>Place</span></div></div>" +
-          '<div class="card-body">' +
-          '<span class="year">' + c.year + "</span>" +
+          '<article class="result reveal">' +
+          '<div class="result-figure"><img src="' + c.img + '" alt="' + c.title + '" loading="lazy" /></div>' +
+          "<div>" +
+          '<span class="label">' + c.year + "</span>" +
           "<h3>" + c.title + "</h3>" +
-          '<div class="result"><span class="medal">' + c.medal + "</span><span>" + c.result + "</span></div>" +
-          "</div></article>"
+          "<p>" + c.result + "</p>" +
+          "</div>" +
+          '<p class="result-place">' + c.place + "<small>Place</small></p>" +
+          "</article>"
         );
       })
       .join("");
 
     return (
-      pageHero({
-        image: "assets/competitions/4.jpg",
-        eyebrow: "Competitions",
+      pagehead({
+        label: "Competitions",
         title: "Breaking barriers, ",
-        titleAccent: "wave after wave.",
+        titleEm: "wave after wave.",
         lede: "Riding waves, breaking barriers, and proving that determination knows no limits.",
+        image: "assets/competitions/4.jpg",
+        alt: "Maria Del Sol celebrating on the beach after a heat",
       }) +
-      '<section class="section section--tight"><div class="wrap">' +
+      '<section class="section--tight section--flush-top"><div class="shell">' +
       '<div class="ranking reveal">' +
-      '<div class="ico">🌊</div>' +
-      "<div><h3>Currently ranked 9th in the world</h3><p>World Surf League — 2025</p></div>" +
+      "<b>Currently ranked 9th in the world</b>" +
+      "<span>World Surf League — 2025</span>" +
       "</div></div></section>" +
-      '<section class="section"><div class="wrap">' +
-      '<div class="section-head reveal">' +
-      '<span class="eyebrow">Results</span>' +
-      '<h2>Competition <span class="gradient-text">results</span></h2>' +
-      "</div>" +
-      '<div class="comps">' + cards + "</div>" +
+      '<section class="section"><div class="shell">' +
+      marker("01", "Results") +
+      '<div class="result-list">' + rows + "</div>" +
       "</div></section>" +
-      ctaBand("Podiums change perception. Funding changes lives. Both matter.")
+      closing("Podiums change perception. Funding changes lives. Both matter.")
     );
   }
 
@@ -481,12 +610,12 @@
 
   function notFound() {
     return (
-      '<section class="section" style="padding-top:calc(var(--header-h) + 90px);min-height:70vh"><div class="wrap">' +
-      '<div class="mission-panel">' +
-      '<span class="eyebrow">404</span>' +
-      '<p class="lede">This wave never formed.</p>' +
-      "<p>The page you were looking for does not exist — but the project does.</p>" +
-      '<div class="hero-actions"><a class="btn btn--primary" href="" data-route>Back to the story ' + ARROW + "</a></div>" +
+      '<section class="section"><div class="shell">' +
+      '<span class="label">Error 404</span>' +
+      '<h1 style="margin-block:22px;max-width:14ch">This wave never formed.</h1>' +
+      '<p class="lede">The page you were looking for does not exist — but the project does.</p>' +
+      '<div class="actions" style="margin-top:32px">' +
+      '<a class="btn btn--solid" href="" data-route>Back to the story</a>' +
       "</div></div></section>"
     );
   }
@@ -497,44 +626,44 @@
     "": {
       view: story,
       nav: "story",
-      title: "The Mobility Project — by Maria Del Sol",
+      title: "Mobility Project — by Maria Del Sol",
       desc:
-        "The Mobility Project is a pump.fun charity campaign led by Maria Del Sol, United Nations Verified Agent, adaptive surfer and double amputee.",
+        "Founded by Maria Del Sol, adaptive surfing champion and disability advocate. Helping fund adaptive equipment, coaching and access to sport.",
     },
     story: { alias: "" },
     mission: {
       view: mission,
       nav: "mission",
-      title: "My Mission — The Mobility Project",
+      title: "Mission — Mobility Project",
       desc: "Mobility and hope, redesigned through courage, faith and inner strength.",
     },
     interviews: {
       view: interviews,
       nav: "interviews",
-      title: "Interviews — The Mobility Project",
+      title: "Interviews — Mobility Project",
       desc: "Interviews and conversations with Maria Del Sol.",
     },
     books: {
       view: books,
       nav: "books",
-      title: "Books — The Mobility Project",
+      title: "Books — Mobility Project",
       desc: "Books authored and co-authored by Maria Del Sol.",
     },
     competitions: {
       view: competitions,
       nav: "competitions",
-      title: "Competitions — The Mobility Project",
+      title: "Competitions — Mobility Project",
       desc: "Adaptive surfing competitions and achievements of Maria Del Sol.",
     },
-    "404": { view: notFound, nav: null, title: "Not found — The Mobility Project" },
+    "404": { view: notFound, nav: null, title: "Not found — Mobility Project" },
   };
 
   global.NAV_ITEMS = [
     { path: "", key: "story", label: "My Story" },
-    { path: "mission", key: "mission", label: "My Mission" },
+    { path: "mission", key: "mission", label: "Mission" },
     { path: "interviews", key: "interviews", label: "Interviews" },
     { path: "books", key: "books", label: "Books" },
     { path: "competitions", key: "competitions", label: "Competitions" },
-    { label: "Buy on pump.fun", cta: true },
+    { label: "Support the Project", cta: true },
   ];
 })(window);
