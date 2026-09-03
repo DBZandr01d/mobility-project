@@ -35,9 +35,9 @@
   --sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
 
   /* Metrics */
-  --shell: 1360px;
-  --gutter: clamp(20px, 5.2vw, 96px);
-  --masthead-h: 84px;
+  --shell: 1520px;
+  --gutter: clamp(20px, 4vw, 72px);
+  --masthead-h: 96px;
 
   --r-sm: 4px;
   --r: 8px;
@@ -77,6 +77,22 @@ body.no-scroll { overflow: hidden; }
 
 img { display: block; max-width: 100%; }
 
+/* Paper grain. Fixed, non-interactive, and low enough to read as texture
+   rather than noise. One 120px tile, so there is nothing to repaint on
+   scroll. */
+.grain {
+  position: fixed;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0.05;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 120px 120px;
+}
+
+@media (prefers-reduced-motion: reduce) { .grain { opacity: 0.035; } }
+
 /* ----------------------------------------------------------- typography -- */
 
 h1, h2, h3, h4 {
@@ -88,8 +104,8 @@ h1, h2, h3, h4 {
   font-optical-sizing: auto;
 }
 
-h1 { font-size: clamp(2.75rem, 6.4vw, 5.1rem); }
-h2 { font-size: clamp(2rem, 4vw, 3.2rem); }
+h1 { font-size: clamp(3rem, 6.6vw, 5.75rem); }
+h2 { font-size: clamp(2.15rem, 4.3vw, 3.6rem); }
 h3 { font-size: clamp(1.25rem, 1.9vw, 1.6rem); line-height: 1.18; }
 
 em, .italic { font-style: italic; }
@@ -120,20 +136,20 @@ strong { color: var(--ink); font-weight: 600; }
   display: flex;
   align-items: baseline;
   gap: 14px;
-  padding-bottom: 18px;
+  padding-bottom: 20px;
   border-bottom: 1px solid var(--rule);
-  margin-bottom: clamp(28px, 4vw, 48px);
+  margin-bottom: clamp(34px, 4.6vw, 60px);
 }
 
 .marker span:first-child {
   font-family: var(--serif);
-  font-size: 0.95rem;
+  font-size: 1.05rem;
   color: var(--ocean);
   font-variant-numeric: lining-nums;
 }
 
 .marker span:last-child {
-  font-size: 0.7rem;
+  font-size: 0.72rem;
   font-weight: 600;
   letter-spacing: 0.19em;
   text-transform: uppercase;
@@ -171,8 +187,8 @@ a { color: inherit; }
   padding-inline: var(--gutter);
 }
 
-.section { padding-block: clamp(64px, 9vw, 136px); }
-.section--tight { padding-block: clamp(44px, 5.5vw, 80px); }
+.section { padding-block: clamp(72px, 9.5vw, 156px); }
+.section--tight { padding-block: clamp(48px, 6vw, 92px); }
 .section--flush-top { padding-top: 0; }
 
 .section--sand { background: var(--paper-2); }
@@ -180,6 +196,28 @@ a { color: inherit; }
 .section--dark {
   background: var(--deep);
   color: var(--paper);
+}
+
+/* A desaturated surf frame bleeding in behind a dark section — texture and
+   ocean character without decoration. */
+.section--washed {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.section--washed > .wash {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 45%;
+  opacity: 0.16;
+  filter: saturate(0.5) contrast(1.05);
+  mask-image: linear-gradient(to bottom, transparent, #000 45%, #000 60%, transparent);
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 45%, #000 60%, transparent);
 }
 
 .section--dark h1,
@@ -234,6 +272,9 @@ a { color: inherit; }
 .btn--ocean { background: var(--ocean); color: var(--white); }
 .btn--ocean:hover { background: var(--deep); }
 
+.btn--navy { background: var(--deep); color: var(--paper); }
+.btn--navy:hover { background: var(--ink); }
+
 .btn--line { border-color: var(--rule); color: var(--ink); }
 .btn--line:hover { border-color: var(--ink); background: rgba(8, 23, 29, 0.04); }
 
@@ -242,13 +283,17 @@ a { color: inherit; }
 /* On dark surfaces the solid/line pair inverts */
 .section--dark .btn--solid,
 .section--dark .btn--ocean,
+.section--dark .btn--navy,
 .on-dark .btn--solid,
-.on-dark .btn--ocean { background: var(--paper); color: var(--ink); }
+.on-dark .btn--ocean,
+.on-dark .btn--navy { background: var(--paper); color: var(--ink); }
 
 .section--dark .btn--solid:hover,
 .section--dark .btn--ocean:hover,
+.section--dark .btn--navy:hover,
 .on-dark .btn--solid:hover,
-.on-dark .btn--ocean:hover { background: var(--white); }
+.on-dark .btn--ocean:hover,
+.on-dark .btn--navy:hover { background: var(--white); }
 
 .section--dark .btn--line,
 .on-dark .btn--line { border-color: var(--rule-dark); color: var(--paper); }
@@ -331,7 +376,7 @@ a { color: inherit; }
 }
 
 .brand img {
-  height: 38px;
+  height: 48px;
   width: auto;
   transition: opacity var(--t-ui) var(--ease);
 }
@@ -347,16 +392,16 @@ a { color: inherit; }
 
 .brand-name b {
   font-family: var(--sans);
-  font-size: 0.86rem;
+  font-size: 0.94rem;
   font-weight: 600;
-  letter-spacing: 0.17em;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--ink);
 }
 
 .brand-name span {
   font-family: var(--serif);
-  font-size: 0.82rem;
+  font-size: 0.88rem;
   font-style: italic;
   color: var(--body);
 }
@@ -364,13 +409,14 @@ a { color: inherit; }
 .nav {
   display: flex;
   align-items: center;
-  gap: clamp(18px, 2.2vw, 34px);
+  gap: clamp(20px, 2.5vw, 40px);
   margin-left: auto;
 }
 
 .nav a {
   position: relative;
-  font-size: 0.9rem;
+  white-space: nowrap;
+  font-size: 0.96rem;
   font-weight: 450;
   color: var(--body);
   text-decoration: none;
@@ -399,6 +445,7 @@ a { color: inherit; }
 .nav .btn { margin-left: clamp(4px, 1vw, 14px); }
 .nav .btn::after { display: none; }
 .nav a.btn:hover { color: var(--paper); }
+.nav .btn--navy { padding: 13px 24px; font-size: 0.88rem; }
 .nav a.btn.is-pending:hover { color: var(--body); }
 
 .burger {
@@ -547,37 +594,69 @@ a { color: inherit; }
 
 /* ------------------------------------------------------------------ hero -- */
 
-.hero { padding-block: clamp(44px, 6vw, 92px) clamp(56px, 7vw, 110px); }
+.hero { padding-block: clamp(40px, 5vw, 78px) clamp(60px, 7.5vw, 120px); }
 
 .hero-grid {
   display: grid;
-  grid-template-columns: minmax(0, 46fr) minmax(0, 54fr);
-  align-items: center;
-  gap: clamp(36px, 5vw, 84px);
+  grid-template-columns: minmax(0, 42fr) minmax(0, 58fr);
+  /* Deliberately not centred — the photograph runs higher than the copy. */
+  align-items: start;
+  gap: clamp(36px, 4.5vw, 76px);
 }
 
-.hero-copy { max-width: 36rem; }
-.hero-copy .label { margin-bottom: clamp(20px, 3vw, 30px); }
+.hero-copy {
+  max-width: 34rem;
+  padding-top: clamp(16px, 5vw, 96px);
+}
 
-.hero h1 { margin-bottom: 26px; }
+.hero-copy .label { margin-bottom: clamp(22px, 3vw, 34px); }
+
+.hero h1 { margin-bottom: 28px; }
 .hero h1 em { display: block; color: var(--ocean); }
-.hero .lede { margin-bottom: 34px; }
+.hero .lede { margin-bottom: 36px; }
+
+.hero-figure { position: relative; }
 
 .hero-figure img {
   width: 100%;
   height: auto;
   aspect-ratio: 4 / 5;
   object-fit: cover;
-  object-position: center 22%;
-  border-radius: var(--r);
+  object-position: center 20%;
+  border-radius: var(--r-sm);
 }
 
+/* The photograph runs past the text grid into the page gutter. */
+@media (min-width: 1100px) {
+  .hero-figure { margin-right: calc(var(--gutter) * -1); }
+  .hero-figure img { aspect-ratio: 5 / 6; }
+}
+
+/* Tiny vertical editorial label riding the left edge of the photograph. */
+.vlabel {
+  position: absolute;
+  top: 6px;
+  left: -30px;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  font-size: 0.63rem;
+  font-weight: 600;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--body);
+  white-space: nowrap;
+}
+
+@media (max-width: 1240px) { .vlabel { display: none; } }
+
 .figure-caption {
-  margin-top: 14px;
+  margin-top: 16px;
+  padding-left: 2px;
+  border-left: 0;
   font-size: 0.82rem;
   line-height: 1.55;
   color: var(--body);
-  max-width: 40ch;
+  max-width: 44ch;
 }
 
 /* Page heads for the inner routes */
@@ -618,8 +697,19 @@ a { color: inherit; }
 
 .credibility > div:first-child { border-left: 0; padding-left: 0; }
 
+.section--dark .credibility {
+  border-top-color: var(--rule-dark);
+  border-bottom-color: var(--rule-dark);
+}
+
+.section--dark .credibility > div { border-left-color: var(--rule-dark-soft); }
+.section--dark .credibility dt { color: var(--paper); }
+.section--dark .credibility dd { color: rgba(244, 242, 235, 0.72); }
+.section--dark .credibility a { color: var(--aqua-text); }
+.section--dark .credibility a:hover { color: var(--paper); }
+
 .credibility dt {
-  font-size: 0.7rem;
+  font-size: 0.72rem;
   font-weight: 600;
   letter-spacing: 0.19em;
   text-transform: uppercase;
@@ -627,7 +717,7 @@ a { color: inherit; }
   margin-bottom: 8px;
 }
 
-.credibility dd { font-size: 0.92rem; line-height: 1.5; color: var(--body); }
+.credibility dd { font-size: 0.96rem; line-height: 1.55; color: var(--body); max-width: 34ch; }
 
 .credibility a {
   color: var(--ocean);
@@ -644,7 +734,70 @@ a { color: inherit; }
     border-top: 1px solid var(--rule-soft);
   }
   .credibility > div:first-child { border-top: 0; }
+  .section--dark .credibility > div { border-top-color: var(--rule-dark-soft); }
+  .section--dark .credibility > div:first-child { border-top: 0; }
 }
+
+/* --------------------------------------------------- the ocean chapter ---- */
+/* A single dark environment: the surf frame carries the quote, then bleeds
+   into solid deep ocean where the credibility bar sits. */
+
+.chapter { background: var(--deep); }
+
+.chapter-frame {
+  position: relative;
+  isolation: isolate;
+  min-height: min(74vh, 680px);
+  display: flex;
+  align-items: flex-end;
+  padding-block: clamp(72px, 10vw, 150px) clamp(40px, 5vw, 76px);
+  overflow: hidden;
+}
+
+.chapter-frame img {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 38%;
+  filter: saturate(0.82);
+}
+
+.chapter-frame::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    linear-gradient(to top, var(--deep) 2%, rgba(17, 56, 67, 0.72) 42%, rgba(17, 56, 67, 0.3) 100%),
+    linear-gradient(to right, rgba(8, 23, 29, 0.45), transparent 60%);
+}
+
+.chapter-frame blockquote {
+  max-width: 18ch;
+  font-family: var(--serif);
+  font-size: clamp(2.2rem, 5vw, 4.1rem);
+  line-height: 1.06;
+  letter-spacing: -0.02em;
+  color: var(--paper);
+  text-wrap: balance;
+}
+
+.chapter-frame cite {
+  display: block;
+  margin-top: 26px;
+  font-family: var(--sans);
+  font-style: normal;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.19em;
+  text-transform: uppercase;
+  color: rgba(244, 242, 235, 0.68);
+}
+
+.chapter-trust { padding-block: clamp(44px, 5.5vw, 84px); }
 
 /* ------------------------------------------------------------ photo band -- */
 
@@ -702,6 +855,17 @@ a { color: inherit; }
   color: rgba(244, 242, 235, 0.7);
 }
 
+/* A single drawn stroke — the only non-photographic ocean reference. */
+.wave-rule {
+  display: block;
+  width: 100%;
+  height: 22px;
+  color: var(--ocean);
+  opacity: 0.4;
+}
+
+.section--dark .wave-rule { color: var(--aqua); opacity: 0.5; }
+
 /* ---------------------------------------------------------------- figures -- */
 
 .figure img {
@@ -714,8 +878,40 @@ a { color: inherit; }
 .figure--tall img { aspect-ratio: 3 / 4; }
 .figure--wide img { aspect-ratio: 16 / 9; }
 
+@media (min-width: 861px) {
+  .row .figure--tall img { aspect-ratio: 4 / 5; max-height: 620px; }
+  .row .figure--wide img { max-height: 520px; }
+}
+
 .prose > * + * { margin-top: 20px; }
 .prose p { font-size: 1.02rem; line-height: 1.7; max-width: 68ch; }
+
+/* Pull quote — an emotional beat inside a run of body copy */
+.pullquote {
+  margin-block: clamp(52px, 6.5vw, 96px);
+  padding-left: clamp(0px, 4vw, 96px);
+  border: 0;
+  max-width: 46rem;
+}
+
+.pullquote p {
+  font-family: var(--serif);
+  font-size: clamp(1.7rem, 3.4vw, 2.9rem);
+  line-height: 1.12;
+  letter-spacing: -0.018em;
+  color: var(--ink);
+  max-width: none;
+  text-wrap: balance;
+}
+
+.pullquote footer {
+  margin-top: 20px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.19em;
+  text-transform: uppercase;
+  color: var(--body);
+}
 
 /* Editorial two-column rows */
 .row {
@@ -729,6 +925,13 @@ a { color: inherit; }
 .row--reverse > .figure { order: 2; }
 
 .row-body { max-width: 40rem; }
+
+/* Every other row lets the image run wider than its text counterpart. */
+@media (min-width: 1100px) {
+  .row--wide { grid-template-columns: minmax(0, 1.18fr) minmax(0, 1fr); }
+  .row--wide.row--reverse { grid-template-columns: minmax(0, 1fr) minmax(0, 1.18fr); }
+  .row--wide.row--reverse > .figure { order: 2; }
+}
 .row-body .label { margin-bottom: 16px; }
 .row-body h3 { margin-bottom: 16px; }
 .row-body .link { margin-top: 10px; }
@@ -1071,8 +1274,13 @@ a { color: inherit; }
 
 .gallery {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: clamp(14px, 1.6vw, 24px);
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: clamp(14px, 1.4vw, 22px);
+}
+
+/* Stagger the strip so it does not read as four identical tiles. */
+@media (min-width: 900px) {
+  .gallery button:nth-child(even) { margin-top: clamp(20px, 3vw, 52px); }
 }
 
 .gallery button {
@@ -1148,7 +1356,7 @@ a { color: inherit; }
   background: rgba(8, 23, 29, 0.84);
 }
 
-.closing h2 { max-width: 16ch; margin-inline: auto; color: var(--paper); }
+.closing h2 { max-width: 15ch; margin-inline: auto; color: var(--paper); font-size: clamp(2.4rem, 5.2vw, 4.2rem); }
 
 .closing p {
   max-width: 46ch;
@@ -1237,15 +1445,17 @@ a { color: inherit; }
   .col-5, .col-6, .col-7 { grid-column: span 12; }
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1080px) {
   .nav { display: none; }
   .burger { display: block; }
   .drawer { display: flex; }
   .drawer:not(.is-open) { visibility: hidden; pointer-events: none; }
+}
 
+@media (max-width: 900px) {
   .hero-grid { grid-template-columns: 1fr; gap: 36px; }
   .hero-figure img { aspect-ratio: 4 / 3; }
-  .hero-copy { max-width: none; }
+  .hero-copy { max-width: none; padding-top: 0; }
 }
 
 @media (max-width: 640px) {

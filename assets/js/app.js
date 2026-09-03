@@ -50,7 +50,7 @@
   function navMarkup(isDrawer) {
     return NAV_ITEMS.map(function (item) {
       if (item.cta) {
-        var cls = isDrawer ? "btn btn--ocean" : "btn btn--ocean btn--sm";
+        var cls = isDrawer ? "btn btn--navy" : "btn btn--navy";
         return '<a class="' + cls + '" href="#" data-link="how-to-buy">' + item.label + "</a>";
       }
       if (item.external) {

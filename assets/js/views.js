@@ -32,8 +32,17 @@
   }
 
   function marker(num, title) {
-    return '<p class="marker"><span>' + num + "</span><span>" + title + "</span></p>";
+    return (
+      '<p class="marker"><span>' + num + "</span><span>— " + title + "</span></p>"
+    );
   }
+
+  /* A single drawn stroke, used sparingly between chapters. */
+  var WAVE_RULE =
+    '<svg class="wave-rule" viewBox="0 0 1200 22" preserveAspectRatio="none" aria-hidden="true" ' +
+    'fill="none" stroke="currentColor" stroke-width="1" vector-effect="non-scaling-stroke">' +
+    '<path d="M0 11C100 1 200 21 300 11S500 1 600 11 800 21 900 11s200-10 300 0" ' +
+    'vector-effect="non-scaling-stroke"/></svg>';
 
   /** Section head for the inner routes. */
   function pagehead(o) {
@@ -119,29 +128,30 @@
       ) +
       "</div>" +
       '<figure class="hero-figure">' +
+      '<span class="vlabel" aria-hidden="true">Mobility Project</span>' +
       '<img src="assets/photos/maria_sitting2.jpg" alt="Maria Del Sol seated on a staircase, wearing her prosthetic legs" />' +
       '<figcaption class="figure-caption">Maria Del Sol. Double amputee since infancy; ' +
       "Brazilian Parasurf champion.</figcaption>" +
       "</figure>" +
       "</div></section>" +
 
-      /* 2 — Credibility */
-      '<section class="section--tight section--flush-top"><div class="shell">' +
-      '<dl class="credibility reveal">' +
+      /* 2 — The ocean chapter: the quote over surf photography that fades
+         into the credibility bar, as one dark environment. */
+      '<section class="chapter section--dark">' +
+      '<div class="chapter-frame">' +
+      '<img src="assets/photos/maria_surfing.jpg" alt="Maria Del Sol riding a wave" />' +
+      '<div class="shell">' +
+      "<blockquote>Everything is a wave — and we surf them together.</blockquote>" +
+      "<cite>Maria Del Sol</cite>" +
+      "</div></div>" +
+      '<div class="chapter-trust"><div class="shell">' +
+      '<dl class="credibility">' +
       "<div><dt>United Nations</dt><dd>Verified Agent, in partnership with TikTok.</dd></div>" +
       '<div><dt>Dare2tri</dt><dd>Donations will be made to ' +
       '<a href="https://dare2tri.org/" target="_blank" rel="noopener">Dare2tri</a>, ' +
       "which brings adaptive sport to athletes with physical disabilities and visual impairments.</dd></div>" +
       "<div><dt>pump.fun</dt><dd>The platform the campaign uses to raise funds and gather its community.</dd></div>" +
-      "</dl></div></section>" +
-
-      /* 3 — Quote over ocean photography */
-      '<section class="band">' +
-      '<img class="band-bg" src="assets/photos/maria_surfing.jpg" alt="Maria Del Sol surfing" />' +
-      '<div class="shell">' +
-      "<blockquote>Everything is a wave — and we surf them together.</blockquote>" +
-      "<cite>Maria Del Sol</cite>" +
-      "</div></section>" +
+      "</dl></div></div></section>" +
 
       /* 4 — Maria's story */
       '<section class="section" id="story"><div class="shell">' +
@@ -158,7 +168,7 @@
 
       '<div style="margin-top:clamp(40px,5vw,72px)">' +
 
-      '<div class="row reveal">' +
+      '<div class="row row--wide reveal">' +
       '<figure class="figure figure--wide"><img src="assets/competitions/3.jpg" alt="Maria carrying her board at a World Surf League event" loading="lazy" /></figure>' +
       '<div class="row-body">' +
       '<span class="label">The ocean</span>' +
@@ -170,6 +180,11 @@
       "exist only in the mind.</p></div>" +
       '<a class="link" href="competitions" data-route>See competition results ' + ARROW + "</a>" +
       "</div></div>" +
+
+      '<blockquote class="pullquote reveal">' +
+      "<p>The ocean taught me that limitations exist only in the mind.</p>" +
+      "<footer>Maria Del Sol</footer>" +
+      "</blockquote>" +
 
       '<div class="row row--reverse reveal">' +
       '<figure class="figure figure--tall"><img src="assets/photos/verified.jpeg" alt="Portrait of Maria Del Sol" loading="lazy" /></figure>' +
@@ -205,8 +220,8 @@
       "me every day why I fight to create a more inclusive world.</p></div>" +
       "</div></div>" +
 
-      '<div class="row reveal">' +
-      '<figure class="figure figure--tall"><img src="assets/photos/prosthetic_legs.jpg" alt="Maria in athletic gear with her running prosthetics" loading="lazy" /></figure>' +
+      '<div class="row row--wide reveal">' +
+      '<figure class="figure figure--wide"><img src="assets/photos/prosthetic_legs.jpg" alt="Running prosthetics standing on a treadmill" loading="lazy" /></figure>' +
       '<div class="row-body">' +
       '<span class="label">The proof</span>' +
       "<h3>Athlete, author, artist</h3>" +
@@ -264,7 +279,9 @@
       "</div></div></div></div></section>" +
 
       /* 6 — Where the funds go */
-      '<section class="section section--dark"><div class="shell">' +
+      '<section class="section section--dark section--washed">' +
+      '<img class="wash" src="assets/photos/maria_surfing.jpg" alt="" aria-hidden="true" loading="lazy" />' +
+      '<div class="shell">' +
       marker("03", "Where the funds go") +
       '<div class="grid" style="margin-bottom:clamp(36px,4.5vw,60px)">' +
       '<div class="col-7 reveal"><h2>Equipment, coaching, and a way into sport.</h2></div>' +
@@ -319,6 +336,7 @@
 
       /* Life in motion */
       '<section class="section"><div class="shell">' +
+      '<div class="reveal" style="margin-bottom:clamp(40px,5vw,72px)">' + WAVE_RULE + "</div>" +
       marker("06", "Life in Motion") +
       '<div class="gallery reveal" id="gallery">' +
       galleryItem("assets/life/photo_2025-12-16_12-22-24.jpg", "Maria in action") +
