@@ -797,15 +797,18 @@ a { color: inherit; }
 .impact {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  border-top: 1px solid var(--rule-dark);
+  border-top: 1px solid var(--rule);
 }
 
 .impact > div {
   padding-top: clamp(28px, 3.4vw, 44px);
   padding-left: clamp(20px, 2.6vw, 40px);
   padding-right: clamp(20px, 2.6vw, 40px);
-  border-left: 1px solid var(--rule-dark-soft);
+  border-left: 1px solid var(--rule-soft);
 }
+
+.section--dark .impact { border-top-color: var(--rule-dark); }
+.section--dark .impact > div { border-left-color: var(--rule-dark-soft); }
 
 .impact > div:first-child { border-left: 0; padding-left: 0; }
 .impact h3 { margin-bottom: 12px; }
@@ -816,13 +819,37 @@ a { color: inherit; }
     border-left: 0;
     padding-left: 0;
     padding-right: 0;
-    border-top: 1px solid var(--rule-dark-soft);
+    border-top: 1px solid var(--rule-soft);
     padding-top: 26px;
   }
   .impact > div:first-child { border-top: 0; }
+  .section--dark .impact > div { border-top-color: var(--rule-dark-soft); }
+  .section--dark .impact > div:first-child { border-top: 0; }
 }
 
 /* --------------------------------------------------------- campaign steps -- */
+
+/* Status strip — for work announced but not yet shipped */
+.notice {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 10px 22px;
+  padding: clamp(20px, 2.4vw, 28px) clamp(20px, 2.4vw, 30px);
+  border: 1px solid var(--rule);
+  border-left: 3px solid var(--ocean);
+  border-radius: 0 var(--r) var(--r) 0;
+  background: var(--paper-2);
+}
+
+.notice .label { flex: none; }
+.notice p { font-size: 0.96rem; margin: 0; max-width: 70ch; }
+
+.section--dark .notice {
+  border-color: var(--rule-dark);
+  border-left-color: var(--aqua-text);
+  background: rgba(244, 242, 235, 0.05);
+}
 
 .steps {
   display: grid;

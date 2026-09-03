@@ -49,6 +49,42 @@
     );
   }
 
+  /**
+   * The app the campaign is raising funds to build. Announcement only — the
+   * app does not exist yet, so nothing here should read as shipped.
+   */
+  function appSection(num) {
+    return (
+      '<section class="section" id="app"><div class="shell">' +
+      marker(num, "In development") +
+      '<div class="grid">' +
+      '<div class="col-7 reveal">' +
+      "<h2>An app to find the right treatment, <em>in the right place.</em></h2>" +
+      "</div>" +
+      '<div class="col-5 reveal"><div class="prose">' +
+      "<p>Finding somewhere that actually handles your condition is one of the " +
+      "quietest barriers disabled people face. We are building an app that helps " +
+      "people find the right locations for their specific treatments — so recovery " +
+      "starts sooner and less of it is spent searching.</p>" +
+      "</div></div></div>" +
+
+      '<div class="notice reveal" style="margin-top:clamp(36px,4vw,56px)">' +
+      '<span class="label">Status</span>' +
+      "<p>In development, and not yet available. Building it is one of the goals " +
+      "the Mobility Project campaign is raising funds for.</p>" +
+      "</div>" +
+
+      '<div class="impact reveal" style="margin-top:clamp(40px,5vw,64px)">' +
+      "<div><h3>Find the right place</h3><p>Locations matched to a person's " +
+      "specific treatment needs, rather than a generic directory.</p></div>" +
+      "<div><h3>Built for recovery</h3><p>Less time spent searching and " +
+      "calling around, more time spent actually recovering.</p></div>" +
+      "<div><h3>Funded by the campaign</h3><p>The app is a campaign goal — " +
+      "supporting the project is what pays to build it.</p></div>" +
+      "</div></div></section>"
+    );
+  }
+
   /** Closing call to action, over a photograph. */
   function closing(text) {
     return (
@@ -234,7 +270,8 @@
       '<div class="col-7 reveal"><h2>Equipment, coaching, and a way into sport.</h2></div>' +
       '<div class="col-5 reveal"><p class="lede">Donations will be made to <strong>Dare2tri</strong>, ' +
       "which brings adaptive sport to athletes with physical disabilities and visual " +
-      "impairments.</p></div>" +
+      "impairments. The campaign is also funding an app to help disabled people find " +
+      "the right locations for their treatments.</p></div>" +
       "</div>" +
       '<div class="impact reveal">' +
       "<div><h3>Adaptive equipment</h3><p>The specialist gear that makes training and " +
@@ -245,9 +282,12 @@
       "and the start line — the part that quietly stops most people.</p></div>" +
       "</div></div></section>" +
 
-      /* 7 — The campaign */
-      '<section class="section"><div class="shell">' +
-      marker("04", "The Campaign") +
+      /* 7 — The app we are raising funds to build */
+      appSection("04") +
+
+      /* 8 — The campaign */
+      '<section class="section section--sand"><div class="shell">' +
+      marker("05", "The Campaign") +
       '<div class="grid">' +
       '<div class="col-6 reveal">' +
       "<h2>A different way to fund mobility.</h2>" +
@@ -278,8 +318,8 @@
       "</div></div></section>" +
 
       /* Life in motion */
-      '<section class="section section--sand"><div class="shell">' +
-      marker("05", "Life in Motion") +
+      '<section class="section"><div class="shell">' +
+      marker("06", "Life in Motion") +
       '<div class="gallery reveal" id="gallery">' +
       galleryItem("assets/life/photo_2025-12-16_12-22-24.jpg", "Maria in action") +
       galleryItem("assets/photos/maria_fun.jpg", "Maria fitting a prosthetic before training") +
@@ -287,9 +327,9 @@
       galleryItem("assets/life/photo_2025-12-16_12-22-56.jpg", "Maria moments") +
       "</div></div></section>" +
 
-      /* 8 — More to explore */
-      '<section class="section"><div class="shell">' +
-      marker("06", "More to explore") +
+      /* 9 — More to explore */
+      '<section class="section section--sand"><div class="shell">' +
+      marker("07", "More to explore") +
       '<div class="cards">' +
       exploreCard("interviews", "assets/photos/interview.jpg", "Media", "Interviews &amp; conversations",
         "Tony Robbins, Brazilian national news, and the story in Maria's own words.") +
@@ -377,8 +417,10 @@
       "and the start line — the part that quietly stops most people.</p></div>" +
       "</div></div></section>" +
 
-      '<section class="section"><div class="shell">' +
-      marker("03", "The Campaign") +
+      appSection("03") +
+
+      '<section class="section section--sand"><div class="shell">' +
+      marker("04", "The Campaign") +
       '<div class="grid">' +
       '<div class="col-6 reveal"><h2>A different way to fund mobility.</h2></div>' +
       '<div class="col-6 reveal"><div class="prose">' +
@@ -628,7 +670,7 @@
       nav: "story",
       title: "Mobility Project — by Maria Del Sol",
       desc:
-        "Founded by Maria Del Sol, adaptive surfing champion and disability advocate. Helping fund adaptive equipment, coaching and access to sport.",
+        "Founded by Maria Del Sol, adaptive surfing champion and disability advocate. Funding adaptive equipment, coaching, access to sport — and an app to help disabled people find the right locations for their treatments.",
     },
     story: { alias: "" },
     mission: {
