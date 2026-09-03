@@ -1,0 +1,6 @@
+# Netlify — legacy pages, then SPA fallback for clean URLs
+/books.html          /books          301!
+/competitions.html   /competitions   301!
+/interviews.html     /interviews     301!
+/index.html          /               301!
+/*                   /index.html     200

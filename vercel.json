@@ -1,0 +1,10 @@
+{
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "redirects": [
+    { "source": "/books.html", "destination": "/books", "permanent": true },
+    { "source": "/competitions.html", "destination": "/competitions", "permanent": true },
+    { "source": "/interviews.html", "destination": "/interviews", "permanent": true }
+  ],
+  "rewrites": [{ "source": "/((?!assets|favicon.ico|manifest.webmanifest).*)", "destination": "/index.html" }]
+}
