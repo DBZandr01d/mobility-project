@@ -37,6 +37,40 @@
     );
   }
 
+  /* Small hand-drawn swell under the hero eyebrow. */
+  var SQUIGGLE =
+    '<svg class="squiggle" viewBox="0 0 84 12" fill="none" stroke="currentColor" ' +
+    'stroke-width="1.6" stroke-linecap="round" aria-hidden="true">' +
+    '<path d="M1 7c4-5 8-5 12 0s8 5 12 0 8-5 12 0 8 5 12 0 8-5 12 0 8 5 11 0"/></svg>';
+
+  /* Imperfect pen stroke under "not a privilege." */
+  var STROKE =
+    '<svg class="stroke" viewBox="0 0 300 14" preserveAspectRatio="none" fill="none" ' +
+    'stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true">' +
+    '<path d="M3 9.5c46-4.2 96-6.4 148-5.6 43 .7 92 3.4 146 7.1" ' +
+    'vector-effect="non-scaling-stroke"/></svg>';
+
+  /* Two distant seabirds. */
+  var BIRDS =
+    '<svg viewBox="0 0 100 40" fill="none" stroke="currentColor" stroke-width="1.5" ' +
+    'stroke-linecap="round" aria-hidden="true">' +
+    '<path d="M4 16c5-6 9-6 13 0 4-6 8-6 13 0"/>' +
+    '<path d="M46 31c3.6-4.4 6.6-4.4 9.5 0 2.9-4.4 5.9-4.4 9.5 0"/>' +
+    '<path d="M72 9c2.8-3.4 5.1-3.4 7.4 0 2.3-3.4 4.6-3.4 7.4 0"/></svg>';
+
+  /* Faint horizon line drawn across the hero. */
+  var HORIZON =
+    '<svg viewBox="0 0 1600 40" preserveAspectRatio="none" fill="none" ' +
+    'stroke="currentColor" stroke-width="1" aria-hidden="true">' +
+    '<path d="M0 22c180-9 300 5 470 2 210-4 330-14 520-9 210 6 350 16 610 5" ' +
+    'vector-effect="non-scaling-stroke"/></svg>';
+
+  /* Small wave mark used beside the photo caption. */
+  var WAVE_DOT =
+    '<svg viewBox="0 0 16 8" fill="none" stroke="currentColor" stroke-width="1.4" ' +
+    'stroke-linecap="round" aria-hidden="true">' +
+    '<path d="M1 5.4c2-3 3.6-3 5.4 0s3.4 3 5.4 0 2.2-2 3.2-.6"/></svg>';
+
   /* A single drawn stroke, used sparingly between chapters. */
   var WAVE_RULE =
     '<svg class="wave-rule" viewBox="0 0 1200 22" preserveAspectRatio="none" aria-hidden="true" ' +
@@ -114,11 +148,21 @@
 
   function story() {
     return (
-      /* 1 — Hero */
-      '<section class="hero"><div class="shell hero-grid">' +
+      /* 1 — Illustrated coastal hero */
+      '<section class="hero">' +
+      '<div class="hero-art" aria-hidden="true">' +
+      '<div class="art art--horizon">' + HORIZON + "</div>" +
+      '<div class="art art--wave"></div>' +
+      '<div class="art art--ocean"></div>' +
+      '<div class="art art--weed"></div>' +
+      '<div class="art art--birds">' + BIRDS + "</div>" +
+      "</div>" +
+
+      '<div class="shell hero-grid">' +
       '<div class="hero-copy">' +
       '<span class="label">A campaign for adaptive mobility</span>' +
-      "<h1>Mobility is a right,<em>not a privilege.</em></h1>" +
+      SQUIGGLE +
+      "<h1>Mobility is a right,<em>not a privilege." + STROKE + "</em></h1>" +
       '<p class="lede">Founded by Maria Del Sol — adaptive surfing champion and ' +
       "disability advocate — Mobility Project helps fund adaptive equipment, " +
       "coaching and access to sport.</p>" +
@@ -127,31 +171,35 @@
         '<a class="link" href="#story">Read Maria\'s story ' + ARROW + "</a>"
       ) +
       "</div>" +
-      '<figure class="hero-figure">' +
-      '<span class="vlabel" aria-hidden="true">Mobility Project</span>' +
-      '<img src="assets/photos/maria_sitting2.jpg" alt="Maria Del Sol seated on a staircase, wearing her prosthetic legs" />' +
-      '<figcaption class="figure-caption">Maria Del Sol. Double amputee since infancy; ' +
-      "Brazilian Parasurf champion.</figcaption>" +
+
+      '<figure class="hero-card">' +
+      '<div class="hero-card-photo">' +
+      '<img src="assets/photos/maria_sitting2.jpg" width="660" height="880" ' +
+      'alt="Maria Del Sol seated on a staircase, wearing her prosthetic legs" />' +
+      "</div>" +
+      '<figcaption class="hero-card-caption">' +
+      '<span class="wave-dot" aria-hidden="true">' + WAVE_DOT + "</span>" +
+      "<span><b>Maria Del Sol.</b> Double amputee since infancy; " +
+      "Brazilian Parasurf champion.</span>" +
+      "</figcaption>" +
+      '<picture class="hero-seal">' +
+      '<source srcset="assets/img/illustration/seal-adaptive-sport.webp" type="image/webp" />' +
+      '<img src="assets/img/illustration/seal-adaptive-sport.png" width="512" height="482" ' +
+      'alt="Adaptive sport changes lives" />' +
+      "</picture>" +
       "</figure>" +
       "</div></section>" +
 
-      /* 2 — The ocean chapter: the quote over surf photography that fades
-         into the credibility bar, as one dark environment. */
-      '<section class="chapter section--dark">' +
-      '<div class="chapter-frame">' +
-      '<img src="assets/photos/maria_surfing.jpg" alt="Maria Del Sol riding a wave" />' +
+      /* 2 — Institutional credibility, on deep ocean */
+      '<section class="section section--tight section--dark trust">' +
       '<div class="shell">' +
-      "<blockquote>Everything is a wave — and we surf them together.</blockquote>" +
-      "<cite>Maria Del Sol</cite>" +
-      "</div></div>" +
-      '<div class="chapter-trust"><div class="shell">' +
       '<dl class="credibility">' +
       "<div><dt>United Nations</dt><dd>Verified Agent, in partnership with TikTok.</dd></div>" +
       '<div><dt>Dare2tri</dt><dd>Donations will be made to ' +
       '<a href="https://dare2tri.org/" target="_blank" rel="noopener">Dare2tri</a>, ' +
       "which brings adaptive sport to athletes with physical disabilities and visual impairments.</dd></div>" +
       "<div><dt>pump.fun</dt><dd>The platform the campaign uses to raise funds and gather its community.</dd></div>" +
-      "</dl></div></div></section>" +
+      "</dl></div></section>" +
 
       /* 4 — Maria's story */
       '<section class="section" id="story"><div class="shell">' +
@@ -277,6 +325,14 @@
       "visibility expands, and ableism is challenged by example, not by pity.</p>" +
       '<a class="link" href="mission" data-route>Read the full mission ' + ARROW + "</a>" +
       "</div></div></div></div></section>" +
+
+      /* Quote moment, over real surf photography */
+      '<section class="band">' +
+      '<img class="band-bg" src="assets/photos/maria_surfing.jpg" alt="Maria Del Sol riding a wave" />' +
+      '<div class="shell">' +
+      "<blockquote>Everything is a wave — and we surf them together.</blockquote>" +
+      "<cite>Maria Del Sol</cite>" +
+      "</div></section>" +
 
       /* 6 — Where the funds go */
       '<section class="section section--dark section--washed">' +

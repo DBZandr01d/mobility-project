@@ -6,29 +6,35 @@
 /* --------------------------------------------------------------- tokens -- */
 
 :root {
-  /* Surface */
-  --paper: #f4f2eb;
-  --paper-2: #edeae1;
-  --sand: #ddd7c9;
+  /* Surface — warm coastal paper */
+  --paper: #f7f2e8;
+  --paper-2: #efe4d0;
+  --sand: #dfc69d;
   --white: #ffffff;
 
   /* Ink & ocean */
-  --ink: #08171d;
-  --deep: #113843;
-  --ocean: #246b82;
-  --aqua: #69a8ad;
+  --ink: #09222d;
+  --deep: #092732;
+  --ocean: #14748d;
+  --aqua: #65adba;
+  --aqua-light: #bfdde0;
   /* Lighter tint for small text on --deep, so labels clear WCAG AA */
-  --aqua-text: #8cc6ca;
-  --body: #5e666a;
+  --aqua-text: #8fcbd6;
+  --body: #5a6b70; /* 4.99:1 on --paper; the spec's #66777c was 3.87:1 */
 
-  /* The logo's lavender, used only as a small accent */
+  /* The logo's lavender — the one purple left on the page */
   --accent: #7c5cd6;
 
   /* Lines */
-  --rule: rgba(8, 23, 29, 0.14);
-  --rule-soft: rgba(8, 23, 29, 0.08);
-  --rule-dark: rgba(244, 242, 235, 0.18);
-  --rule-dark-soft: rgba(244, 242, 235, 0.1);
+  --rule: rgba(9, 34, 45, 0.14);
+  --rule-soft: rgba(9, 34, 45, 0.08);
+  --rule-dark: rgba(247, 242, 232, 0.2);
+  --rule-dark-soft: rgba(247, 242, 232, 0.11);
+
+  /* Illustration layer paths, declared once */
+  --art-ocean: url("../img/illustration/ocean-foreground.png");
+  --art-wave: url("../img/illustration/breaking-wave.png");
+  --art-weed: url("../img/illustration/seaweed-corner.png");
 
   /* Type */
   --serif: "Newsreader", "Iowan Old Style", Georgia, "Times New Roman", serif;
@@ -85,7 +91,7 @@ img { display: block; max-width: 100%; }
   inset: 0;
   z-index: 2;
   pointer-events: none;
-  opacity: 0.05;
+  opacity: 0.055;
   mix-blend-mode: multiply;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)'/%3E%3C/svg%3E");
   background-size: 120px 120px;
@@ -224,12 +230,12 @@ a { color: inherit; }
 .section--dark h2,
 .section--dark h3 { color: var(--paper); }
 
-.section--dark p { color: rgba(244, 242, 235, 0.74); }
+.section--dark p { color: rgba(247, 242, 232, 0.74); }
 .section--dark strong { color: var(--paper); }
 .section--dark .label { color: var(--aqua-text); }
 .section--dark .marker { border-bottom-color: var(--rule-dark); }
 .section--dark .marker span:first-child { color: var(--aqua-text); }
-.section--dark .marker span:last-child { color: rgba(244, 242, 235, 0.62); }
+.section--dark .marker span:last-child { color: rgba(247, 242, 232, 0.62); }
 .section--dark .link { color: var(--paper); }
 .section--dark .link:hover { color: var(--aqua-text); }
 
@@ -272,28 +278,36 @@ a { color: inherit; }
 .btn--ocean { background: var(--ocean); color: var(--white); }
 .btn--ocean:hover { background: var(--deep); }
 
-.btn--navy { background: var(--deep); color: var(--paper); }
-.btn--navy:hover { background: var(--ink); }
+/* Header CTA: outlined in ocean, fills on hover. */
+.btn--outline {
+  background: transparent;
+  border-color: var(--ocean);
+  color: var(--ocean);
+}
+
+.btn--outline:hover { background: var(--ocean); color: var(--white); }
 
 .btn--line { border-color: var(--rule); color: var(--ink); }
-.btn--line:hover { border-color: var(--ink); background: rgba(8, 23, 29, 0.04); }
+.btn--line:hover { border-color: var(--ink); background: rgba(9, 34, 45, 0.04); }
 
 .btn--sm { padding: 11px 20px; font-size: 0.83rem; }
 
 /* On dark surfaces the solid/line pair inverts */
 .section--dark .btn--solid,
 .section--dark .btn--ocean,
-.section--dark .btn--navy,
 .on-dark .btn--solid,
-.on-dark .btn--ocean,
-.on-dark .btn--navy { background: var(--paper); color: var(--ink); }
+.on-dark .btn--ocean { background: var(--paper); color: var(--ink); }
 
 .section--dark .btn--solid:hover,
 .section--dark .btn--ocean:hover,
-.section--dark .btn--navy:hover,
 .on-dark .btn--solid:hover,
-.on-dark .btn--ocean:hover,
-.on-dark .btn--navy:hover { background: var(--white); }
+.on-dark .btn--ocean:hover { background: var(--white); }
+
+.section--dark .btn--outline,
+.on-dark .btn--outline { border-color: var(--aqua-text); color: var(--aqua-text); }
+
+.section--dark .btn--outline:hover,
+.on-dark .btn--outline:hover { background: var(--aqua-text); color: var(--ink); }
 
 .section--dark .btn--line,
 .on-dark .btn--line { border-color: var(--rule-dark); color: var(--paper); }
@@ -301,7 +315,7 @@ a { color: inherit; }
 .section--dark .btn--line:hover,
 .on-dark .btn--line:hover {
   border-color: var(--paper);
-  background: rgba(244, 242, 235, 0.08);
+  background: rgba(247, 242, 232, 0.08);
 }
 
 /* Pre-launch state — quiet, never the loudest thing on screen */
@@ -317,7 +331,7 @@ a { color: inherit; }
 .section--dark .btn.is-pending:hover,
 .on-dark .btn.is-pending,
 .on-dark .btn.is-pending:hover {
-  color: rgba(244, 242, 235, 0.62);
+  color: rgba(247, 242, 232, 0.62);
   border-color: var(--rule-dark);
   background: transparent;
 }
@@ -335,7 +349,7 @@ a { color: inherit; }
 .cta-note { font-size: 0.82rem; color: var(--body); max-width: 46ch; }
 
 .section--dark .cta-note,
-.on-dark .cta-note { color: rgba(244, 242, 235, 0.62); }
+.on-dark .cta-note { color: rgba(247, 242, 232, 0.62); }
 
 /* Campaign state switches, driven by assets/js/config.js */
 [data-campaign="pending"] .when-live { display: none !important; }
@@ -355,9 +369,9 @@ a { color: inherit; }
 
 .masthead.is-stuck {
   border-bottom-color: var(--rule);
-  background: rgba(244, 242, 235, 0.94);
-  backdrop-filter: saturate(140%) blur(8px);
-  -webkit-backdrop-filter: saturate(140%) blur(8px);
+  background: rgba(247, 242, 232, 0.95);
+  backdrop-filter: saturate(120%) blur(6px);
+  -webkit-backdrop-filter: saturate(120%) blur(6px);
 }
 
 .masthead .shell {
@@ -376,7 +390,7 @@ a { color: inherit; }
 }
 
 .brand img {
-  height: 48px;
+  height: 54px;
   width: auto;
   transition: opacity var(--t-ui) var(--ease);
 }
@@ -392,16 +406,16 @@ a { color: inherit; }
 
 .brand-name b {
   font-family: var(--sans);
-  font-size: 0.94rem;
+  font-size: 1rem;
   font-weight: 600;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.15em;
   text-transform: uppercase;
   color: var(--ink);
 }
 
 .brand-name span {
   font-family: var(--serif);
-  font-size: 0.88rem;
+  font-size: 0.92rem;
   font-style: italic;
   color: var(--body);
 }
@@ -445,7 +459,8 @@ a { color: inherit; }
 .nav .btn { margin-left: clamp(4px, 1vw, 14px); }
 .nav .btn::after { display: none; }
 .nav a.btn:hover { color: var(--paper); }
-.nav .btn--navy { padding: 13px 24px; font-size: 0.88rem; }
+.nav .btn--outline { padding: 13px 26px; font-size: 0.9rem; }
+.nav a.btn--outline:hover { color: var(--white); }
 .nav a.btn.is-pending:hover { color: var(--body); }
 
 .burger {
@@ -546,8 +561,8 @@ a { color: inherit; }
   inset: 0;
   pointer-events: none;
   background:
-    linear-gradient(to bottom, rgba(8, 23, 29, 0.55), transparent 22%),
-    linear-gradient(to top, rgba(8, 23, 29, 0.6), transparent 26%);
+    linear-gradient(to bottom, rgba(9, 34, 45, 0.55), transparent 22%),
+    linear-gradient(to top, rgba(9, 34, 45, 0.6), transparent 26%);
 }
 
 .intro-mark {
@@ -581,7 +596,7 @@ a { color: inherit; }
   padding: 14px 26px;
   border: 1px solid rgba(255, 255, 255, 0.55);
   border-radius: var(--r);
-  background: rgba(8, 23, 29, 0.35);
+  background: rgba(9, 34, 45, 0.35);
   -webkit-backdrop-filter: blur(6px);
   backdrop-filter: blur(6px);
   color: #fff;
@@ -621,71 +636,241 @@ a { color: inherit; }
 }
 
 /* ------------------------------------------------------------------ hero -- */
+/* A composed illustration: watercolour layers behind, content above.
+   Stacking order — horizon 1, waves 2, botanical 3, content 5, seal 7. */
 
-.hero { padding-block: clamp(40px, 5vw, 78px) clamp(60px, 7.5vw, 120px); }
+.hero {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  align-items: center;
+  min-height: max(720px, calc(100vh - var(--masthead-h)));
+  padding-block: clamp(36px, 3.6vw, 60px) clamp(130px, 15vw, 250px);
+  overflow: hidden;
+}
+
+.hero > .shell { position: relative; z-index: 5; width: 100%; }
+
+/* --- illustration layers --------------------------------------------------- */
+
+.hero-art {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.art {
+  position: absolute;
+  background-repeat: no-repeat;
+}
+
+/* Faint hand-drawn horizon tying the two halves of the hero together */
+.art--horizon {
+  z-index: 1;
+  left: 0;
+  right: 0;
+  top: 44%;
+  height: 40px;
+  opacity: 0.16;
+  color: var(--ocean);
+  mask-image: linear-gradient(to right, #000, transparent 26%, transparent 74%, #000);
+  -webkit-mask-image: linear-gradient(to right, #000, transparent 26%, transparent 74%, #000);
+}
+
+.art--horizon svg { width: 100%; height: 100%; }
+
+/* Breaking wave entering from beyond the left edge, behind the heading */
+.art--wave {
+  z-index: 2;
+  left: clamp(-200px, -10vw, -120px);
+  bottom: clamp(180px, 23vw, 380px);
+  width: clamp(300px, 32vw, 560px);
+  aspect-ratio: 1100 / 1103;
+  opacity: 0.5;
+  background-image: var(--art-wave);
+  background-image: image-set(
+    url("../img/illustration/breaking-wave.webp") type("image/webp"),
+    url("../img/illustration/breaking-wave.png") type("image/png")
+  );
+  background-size: contain;
+  background-position: left bottom;
+}
+
+/* The layered ocean running the full width along the bottom of the hero */
+.art--ocean {
+  z-index: 2;
+  left: -3vw;
+  right: -3vw;
+  bottom: -2px;
+  height: clamp(190px, 24vw, 400px);
+  background-image: var(--art-ocean);
+  background-image: image-set(
+    url("../img/illustration/ocean-foreground.webp") type("image/webp"),
+    url("../img/illustration/ocean-foreground.png") type("image/png")
+  );
+  background-size: 106% auto;
+  background-position: center bottom;
+}
+
+/* Botanical rising out of the water at the lower left. Kept clear of the
+   botanical already painted into the ocean asset. */
+.art--weed {
+  z-index: 3;
+  left: clamp(-40px, -1.6vw, -10px);
+  bottom: clamp(150px, 19vw, 320px);
+  width: clamp(104px, 13vw, 225px);
+  aspect-ratio: 640 / 647;
+  opacity: 0.55;
+  background-image: var(--art-weed);
+  background-image: image-set(
+    url("../img/illustration/seaweed-corner.webp") type("image/webp"),
+    url("../img/illustration/seaweed-corner.png") type("image/png")
+  );
+  background-size: contain;
+  background-position: left bottom;
+}
+
+/* Two distant birds in the empty cream between the headline and the card */
+.art--birds {
+  z-index: 3;
+  top: clamp(90px, 13vw, 190px);
+  left: 48%;
+  width: clamp(60px, 6vw, 98px);
+  color: var(--aqua);
+  opacity: 0.62;
+}
+
+.art--birds svg { width: 100%; height: auto; display: block; }
+
+/* --- hero composition ------------------------------------------------------ */
 
 .hero-grid {
   display: grid;
-  grid-template-columns: minmax(0, 42fr) minmax(0, 58fr);
-  /* Deliberately not centred — the photograph runs higher than the copy. */
-  align-items: start;
-  gap: clamp(36px, 4.5vw, 76px);
+  grid-template-columns: minmax(0, 47fr) minmax(0, 47fr);
+  justify-content: space-between;
+  align-items: center;
+  gap: clamp(36px, 5vw, 90px);
 }
 
-.hero-copy {
+.hero-copy { max-width: 36rem; }
+
+.hero-copy .label { letter-spacing: 0.2em; font-size: 0.78rem; }
+
+/* Small hand-drawn swell under the eyebrow */
+.squiggle {
+  display: block;
+  width: 84px;
+  height: 12px;
+  margin-block: 14px 26px;
+  color: var(--aqua);
+}
+
+.hero h1 {
+  margin-bottom: 28px;
+  font-size: clamp(3rem, 6.6vw, 5.75rem);
+  line-height: 0.98;
+  text-wrap: balance;
+}
+
+.hero h1 em {
+  position: relative;
+  display: block;
+  color: var(--ocean);
+  font-style: italic;
+  font-size: 0.94em;
+}
+
+/* Imperfect editorial pen stroke under "not a privilege." */
+.hero h1 em .stroke {
+  position: absolute;
+  left: 0;
+  bottom: -0.16em;
+  width: min(100%, 9.6em);
+  height: 0.2em;
+  color: var(--aqua);
+  overflow: visible;
+}
+
+.hero .lede {
   max-width: 34rem;
-  padding-top: clamp(16px, 5vw, 96px);
+  margin-bottom: 36px;
+  font-size: clamp(1.05rem, 1.2vw, 1.2rem);
+  line-height: 1.55;
 }
 
-.hero-copy .label { margin-bottom: clamp(22px, 3vw, 34px); }
+/* --- Maria's photograph, mounted like a print ------------------------------ */
 
-.hero h1 { margin-bottom: 28px; }
-.hero h1 em { display: block; color: var(--ocean); }
-.hero .lede { margin-bottom: 36px; }
+.hero-card {
+  position: relative;
+  justify-self: end;
+  width: min(100%, 520px);
+  margin-top: clamp(-8px, -3vw, -56px);
+  padding: clamp(10px, 0.9vw, 14px);
+  border: 1px solid rgba(223, 198, 157, 0.7);
+  border-radius: 22px;
+  background: #fbf7ee;
+  box-shadow: 0 34px 70px -34px rgba(9, 34, 45, 0.35),
+    0 4px 14px -8px rgba(9, 34, 45, 0.16);
+}
 
-.hero-figure { position: relative; }
+.hero-card-photo {
+  overflow: hidden;
+  border-radius: 12px;
+  background: var(--sand);
+}
 
-.hero-figure img {
+.hero-card-photo img {
   width: 100%;
   height: auto;
   aspect-ratio: 4 / 5;
   object-fit: cover;
   object-position: center 20%;
-  border-radius: var(--r-sm);
 }
 
-/* The photograph runs past the text grid into the page gutter. */
-@media (min-width: 1100px) {
-  .hero-figure { margin-right: calc(var(--gutter) * -1); }
-  .hero-figure img { aspect-ratio: 5 / 6; }
+.hero-card-caption {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 16px 6px 4px;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: var(--body);
 }
 
-/* Tiny vertical editorial label riding the left edge of the photograph. */
-.vlabel {
+.hero-card-caption b { display: block; color: var(--ink); font-weight: 600; }
+
+.wave-dot {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 30px;
+  height: 30px;
+  margin-top: 1px;
+  border: 1px solid var(--aqua-light);
+  border-radius: 50%;
+  background: var(--paper);
+  color: var(--ocean);
+}
+
+.wave-dot svg { width: 16px; height: 8px; }
+
+/* The campaign seal, printed over the corner of the mount */
+.hero-seal {
   position: absolute;
-  top: 6px;
-  left: -30px;
-  writing-mode: vertical-rl;
-  transform: rotate(180deg);
-  font-size: 0.63rem;
-  font-weight: 600;
-  letter-spacing: 0.28em;
-  text-transform: uppercase;
-  color: var(--body);
-  white-space: nowrap;
+  top: 0;
+  right: 0;
+  z-index: 7;
+  display: block;
+  width: clamp(96px, 11vw, 168px);
+  transform: translate(32%, -18%) rotate(-3deg);
+  filter: drop-shadow(0 12px 22px rgba(9, 34, 45, 0.24));
+  transition: transform var(--t-ui) var(--ease);
 }
 
-@media (max-width: 1240px) { .vlabel { display: none; } }
+.hero-seal img { display: block; width: 100%; height: auto; }
 
-.figure-caption {
-  margin-top: 16px;
-  padding-left: 2px;
-  border-left: 0;
-  font-size: 0.82rem;
-  line-height: 1.55;
-  color: var(--body);
-  max-width: 44ch;
-}
+.hero-card:hover .hero-seal { transform: translate(32%, -18%) rotate(-3deg) translateY(-2px); }
 
 /* Page heads for the inner routes */
 .pagehead { padding-block: clamp(48px, 6vw, 96px) clamp(32px, 4vw, 56px); }
@@ -710,6 +895,8 @@ a { color: inherit; }
 
 /* ----------------------------------------------------- credibility strip -- */
 
+.trust { padding-block: clamp(48px, 5.5vw, 88px); }
+
 .credibility {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -719,7 +906,7 @@ a { color: inherit; }
 }
 
 .credibility > div {
-  padding: clamp(24px, 3vw, 34px) clamp(20px, 2.4vw, 36px);
+  padding: clamp(26px, 3.2vw, 40px) clamp(22px, 2.6vw, 44px);
   border-left: 1px solid var(--rule-soft);
 }
 
@@ -730,19 +917,20 @@ a { color: inherit; }
   border-bottom-color: var(--rule-dark);
 }
 
-.section--dark .credibility > div { border-left-color: var(--rule-dark-soft); }
+.section--dark .credibility > div { border-left-color: rgba(143, 203, 214, 0.28); }
+.section--dark .credibility { border-color: rgba(143, 203, 214, 0.35); }
 .section--dark .credibility dt { color: var(--paper); }
-.section--dark .credibility dd { color: rgba(244, 242, 235, 0.72); }
+.section--dark .credibility dd { color: rgba(247, 242, 232, 0.72); }
 .section--dark .credibility a { color: var(--aqua-text); }
 .section--dark .credibility a:hover { color: var(--paper); }
 
 .credibility dt {
   font-size: 0.72rem;
   font-weight: 600;
-  letter-spacing: 0.19em;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--ink);
-  margin-bottom: 8px;
+  margin-bottom: 12px;
 }
 
 .credibility dd { font-size: 0.96rem; line-height: 1.55; color: var(--body); max-width: 34ch; }
@@ -765,67 +953,6 @@ a { color: inherit; }
   .section--dark .credibility > div { border-top-color: var(--rule-dark-soft); }
   .section--dark .credibility > div:first-child { border-top: 0; }
 }
-
-/* --------------------------------------------------- the ocean chapter ---- */
-/* A single dark environment: the surf frame carries the quote, then bleeds
-   into solid deep ocean where the credibility bar sits. */
-
-.chapter { background: var(--deep); }
-
-.chapter-frame {
-  position: relative;
-  isolation: isolate;
-  min-height: min(74vh, 680px);
-  display: flex;
-  align-items: flex-end;
-  padding-block: clamp(72px, 10vw, 150px) clamp(40px, 5vw, 76px);
-  overflow: hidden;
-}
-
-.chapter-frame img {
-  position: absolute;
-  inset: 0;
-  z-index: -2;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center 38%;
-  filter: saturate(0.82);
-}
-
-.chapter-frame::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background:
-    linear-gradient(to top, var(--deep) 2%, rgba(17, 56, 67, 0.72) 42%, rgba(17, 56, 67, 0.3) 100%),
-    linear-gradient(to right, rgba(8, 23, 29, 0.45), transparent 60%);
-}
-
-.chapter-frame blockquote {
-  max-width: 18ch;
-  font-family: var(--serif);
-  font-size: clamp(2.2rem, 5vw, 4.1rem);
-  line-height: 1.06;
-  letter-spacing: -0.02em;
-  color: var(--paper);
-  text-wrap: balance;
-}
-
-.chapter-frame cite {
-  display: block;
-  margin-top: 26px;
-  font-family: var(--sans);
-  font-style: normal;
-  font-size: 0.72rem;
-  font-weight: 600;
-  letter-spacing: 0.19em;
-  text-transform: uppercase;
-  color: rgba(244, 242, 235, 0.68);
-}
-
-.chapter-trust { padding-block: clamp(44px, 5.5vw, 84px); }
 
 /* ------------------------------------------------------------ photo band -- */
 
@@ -856,9 +983,9 @@ a { color: inherit; }
   z-index: -1;
   background: linear-gradient(
     to top,
-    rgba(8, 23, 29, 0.88) 0%,
-    rgba(8, 23, 29, 0.55) 46%,
-    rgba(8, 23, 29, 0.28) 100%
+    rgba(9, 34, 45, 0.88) 0%,
+    rgba(9, 34, 45, 0.55) 46%,
+    rgba(9, 34, 45, 0.28) 100%
   );
 }
 
@@ -880,7 +1007,7 @@ a { color: inherit; }
   font-weight: 600;
   letter-spacing: 0.19em;
   text-transform: uppercase;
-  color: rgba(244, 242, 235, 0.7);
+  color: rgba(247, 242, 232, 0.7);
 }
 
 /* A single drawn stroke — the only non-photographic ocean reference. */
@@ -1079,7 +1206,7 @@ a { color: inherit; }
 .section--dark .notice {
   border-color: var(--rule-dark);
   border-left-color: var(--aqua-text);
-  background: rgba(244, 242, 235, 0.05);
+  background: rgba(247, 242, 232, 0.05);
 }
 
 .steps {
@@ -1338,7 +1465,7 @@ a { color: inherit; }
   display: grid;
   place-items: center;
   padding: 5vmin;
-  background: rgba(8, 23, 29, 0.95);
+  background: rgba(9, 34, 45, 0.95);
   visibility: hidden;
   pointer-events: none;
   opacity: 0;
@@ -1355,7 +1482,7 @@ a { color: inherit; }
   right: 20px;
   width: 44px;
   height: 44px;
-  border: 1px solid rgba(244, 242, 235, 0.3);
+  border: 1px solid rgba(247, 242, 232, 0.3);
   border-radius: var(--r-sm);
   background: transparent;
   color: var(--paper);
@@ -1364,7 +1491,7 @@ a { color: inherit; }
   transition: background-color var(--t-ui) var(--ease);
 }
 
-.lightbox-close:hover { background: rgba(244, 242, 235, 0.12); }
+.lightbox-close:hover { background: rgba(247, 242, 232, 0.12); }
 
 /* -------------------------------------------------------------- final CTA -- */
 
@@ -1381,7 +1508,7 @@ a { color: inherit; }
   position: absolute;
   inset: 0;
   z-index: -1;
-  background: rgba(8, 23, 29, 0.84);
+  background: rgba(9, 34, 45, 0.84);
 }
 
 .closing h2 { max-width: 15ch; margin-inline: auto; color: var(--paper); font-size: clamp(2.4rem, 5.2vw, 4.2rem); }
@@ -1389,7 +1516,7 @@ a { color: inherit; }
 .closing p {
   max-width: 46ch;
   margin: 22px auto 0;
-  color: rgba(244, 242, 235, 0.78);
+  color: rgba(247, 242, 232, 0.78);
 }
 
 .closing .actions { justify-content: center; margin-top: 36px; }
@@ -1573,4 +1700,54 @@ a { color: inherit; }
     scroll-behavior: auto !important;
   }
   .reveal { opacity: 1; transform: none; }
+}
+
+/* ---------------------------------------------- illustrated hero: responsive */
+
+@media (max-width: 900px) {
+  .hero {
+    min-height: 0;
+    align-items: flex-start;
+    padding-block: clamp(28px, 6vw, 48px) clamp(150px, 34vw, 240px);
+  }
+
+  .hero-grid { grid-template-columns: 1fr; gap: clamp(30px, 7vw, 48px); }
+  .hero-copy { max-width: none; }
+
+  .hero-card {
+    justify-self: stretch;
+    width: 100%;
+    margin-top: 0;
+  }
+
+  /* The framing wave competes with the headline once the columns stack. */
+  .art--wave { opacity: 0.24; width: clamp(220px, 42vw, 320px); bottom: auto; top: 30vw; }
+  .art--weed { opacity: 0.4; bottom: clamp(120px, 28vw, 200px); }
+  .art--birds { display: none; }
+  .art--horizon { display: none; }
+}
+
+@media (max-width: 640px) {
+  .hero { padding-bottom: clamp(140px, 42vw, 210px); }
+
+  .hero h1 { font-size: clamp(3.25rem, 15vw, 4.25rem); line-height: 0.96; }
+  .hero-copy .label { font-size: 0.75rem; }
+  .squiggle { width: 68px; margin-block: 12px 20px; }
+
+  /* Keep the seal inside the viewport now that the card is full width. */
+  .hero-seal {
+    width: clamp(88px, 26vw, 110px);
+    transform: translate(14%, -16%) rotate(-3deg);
+  }
+
+  .hero-card:hover .hero-seal { transform: translate(14%, -16%) rotate(-3deg); }
+
+  /* Show a fuller slice of the painting rather than a thin strip. */
+  .art--ocean {
+    height: clamp(150px, 44vw, 210px);
+    background-size: 210% auto;
+    background-position: 66% bottom;
+  }
+
+  .art--weed { width: clamp(88px, 24vw, 130px); left: -22px; }
 }
